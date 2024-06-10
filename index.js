@@ -7,6 +7,7 @@ import {
 } from 'https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module';
 
 import { oracle } from './oracle.js';
+import { initI18n } from './i18n.js';
 
 const html = htm.bind(h);
 
@@ -26,12 +27,12 @@ const App = () => {
 
   return html`<div class="container">
     <header>
-      <h1>Loom of Fate</h1>
+      <h1>${i18next.t('loom_of_fate')}</h1>
     </header>
     <div class="content">
       <div class="results" ref="${containerRef}">
         ${previousResults.map((result, index) => {
-          return html`<div class="result" ttabindex="0">
+          return html`<div class="result">
             <h2 style="${{ opacity: 1 / (previousResults.length - index) }}">
               ${result.response.item}
             </h2>
@@ -50,10 +51,12 @@ const App = () => {
       </div>
     </div>
     <div class="footer">
-      <button onclick="${() => test('question')}">Question</button>
-      <button onclick="${() => test('action')}">Action</button>
+      <button onclick="${() => test('question')}">${i18next.t('question')}</button>
+      <button onclick="${() => test('action')}">${i18next.t('action')}</button>
     </div>
   </div>`;
 };
 
-render(html`<${App} />`, document.getElementById('root'));
+initI18n().then(() => {
+  render(html`<${App} />`, document.getElementById('root'));
+});

@@ -1,139 +1,141 @@
 import { weightedRandom } from './utils.js';
 
-const commonNeg = [
-  {
-    item: 'tu perds du temps',
-    weight: 30,
-    help: 'Explique ce qui te fait perdre du temps.',
-  },
-  {
-    item: 'tu en paies le prix',
-    weight: 30,
-    help: 'Tu subis une blessure physique ou psychologique.',
-  },
-  { item: 'tu consommes une ressource', weight: 20 },
-  { item: 'tu te mets en danger', weight: 30 },
-];
-
-const yesIf = [
-  {
-    item: "tu sacrifies quelque chose ou quelqu'un",
-    weight: 10,
-    help: 'Ce tiers va subir des conséquences de ton action.',
-  },
-  { item: 'tu te fais aider', weight: 10 },
-  { item: 'tu utilises un objet', weight: 20 },
-  {
-    item: 'tu modifies tes plans',
-    weight: 30,
-    help: "Ce que tu voulais faire n'est pas possible mais une autre solution existe. Trouve-la.",
-  },
-  {
-    item: 'tu fais avancer une menace',
-    weight: 10,
-    help: "Coche la case d'une menace en lien avec l'intrigue et explique pourquoi elle avance.",
-  },
-
-  ...commonNeg,
-];
-
-const noAnd = [
-  {
-    item: 'tu subis une trahison',
-    weight: 5,
-    help: "Quelqu'un ou quelque chose te trahit.",
-  },
-  { item: "l'opposition se renforce", weight: 5 },
-  {
-    item: "l'intrigue se complique",
-    weight: 5,
-    help: "Ajoute une case à l'intrigue et explique pourquoi.",
-  },
-  {
-    item: 'une menace progresse',
-    weight: 5,
-    help: 'Ajoute une case à une menace et explique ce qui se passe.',
-  },
-  { item: 'ça se retourne contre toi', weight: 10 },
-  {
-    item: 'tu annonces un problème à venir',
-    weight: 10,
-    help: "Ce que tu fais va provoquer un problème plus tard. C'est quoi ?",
-  },
-  { item: 'tu annonces un problème hors-champ', weight: 10 },
-
-  ...commonNeg,
-];
-
-const yesBut = [
-  { item: 'de manière partielle', weight: 30 },
-  { item: "c'est temporaire", weight: 30 },
-  {
-    item: 'le résultat est inattendu',
-    weight: 20,
-    help: "Ça marche mais le résultat n'est pas celui attendu.",
-  },
-  { item: 'ça coûte plus cher que prévu', weight: 25 },
-
-  ...commonNeg,
-];
-
-const yesAnd = [
-  { item: 'tu gagnes quelque chose en plus', weight: 40 },
-  { item: "c'est durable", weight: 40 },
-  {
-    item: 'tu profites de ton élan',
-    weight: 40,
-    help: 'La prochaine action dans le même élan est réussie automatiquement.',
-  },
-  { item: 'tu annonces une aubaine à venir', weight: 30 },
-  { item: 'tu annonces une aubaine hors-champ', weight: 30 },
-  { item: 'tu obtiens une aide inattendue', weight: 20 },
-  { item: 'tu te fais aider', weight: 20 },
-  { item: "c'est une action héroïque", weight: 10 },
-  { item: "ça fait avancer l'intrigue", weight: 20 },
-  { item: 'tu gagnes un allié', weight: 10 },
-  { item: 'quelque chose d’exceptionnel arrive', weight: 10 },
-  { item: 'un lien se fait avec une autre intrigue', weight: 10 },
-  {
-    item: 'une menace recule',
-    weight: 10,
-    help: "Ajoute une case à une menace en lien avec l'intrigue et explique pourquoi elle recule.",
-  },
-];
-
-const mainAction = [
-  {
-    item: 'Pose une autre question',
-    weight: 2,
-    help: "La question ne peut pas être posée car la situation ne le permet pas. Qu'est-ce qui a changé ?",
-  },
-  { item: 'Oui, et...', weight: 10, addition: yesAnd },
-  { item: 'Oui', weight: 5 },
-  { item: 'Oui, si...', weight: 15, addition: yesIf },
-  { item: 'Oui, mais...', weight: 5, addition: yesBut },
-  { item: 'Non', weight: 20 },
-  { item: 'Non, et...', weight: 10, addition: noAnd },
-];
-
-const mainQuestion = [
-  {
-    item: 'Pose une autre question',
-    weight: 5,
-    help: "La question ne peut pas être posée car la situation ne le permet pas. Qu'est-ce qui a changé ?",
-  },
-  { item: 'Oui, et...', weight: 10 },
-  { item: 'Oui', weight: 20 },
-  { item: 'Oui, mais...', weight: 20 },
-  { item: 'Non, mais...', weight: 20 },
-  { item: 'Non', weight: 20 },
-  { item: 'Non, et...', weight: 10 },
-];
-
 export const oracle = (type) => {
+  const commonNeg = [
+    {
+      item: i18next.t('lose_time'),
+      weight: 30,
+      help: i18next.t('explain_lose_time'),
+    },
+    {
+      item: i18next.t('pay_price'),
+      weight: 30,
+      help: i18next.t('explain_pay_price'),
+    },
+    { item: i18next.t('consume_resource'), weight: 20 },
+    { item: i18next.t('danger'), weight: 30 },
+  ];
+
+  const yesIf = [
+    {
+      item: i18next.t('sacrifice'),
+      weight: 10,
+      help: i18next.t('explain_sacrifice'),
+    },
+    { item: i18next.t('get_help'), weight: 10 },
+    { item: i18next.t('use_object'), weight: 20 },
+    {
+      item: i18next.t('change_plans'),
+      weight: 30,
+      help: i18next.t('explain_change_plans'),
+    },
+    {
+      item: i18next.t('advance_threat'),
+      weight: 10,
+      help: i18next.t('explain_advance_threat'),
+    },
+
+    ...commonNeg,
+  ];
+
+  const noAnd = [
+    {
+      item: i18next.t('betrayal'),
+      weight: 5,
+      help: i18next.t('explain_betrayal'),
+    },
+    { item: i18next.t('oppose_strengthen'), weight: 5 },
+    {
+      item: i18next.t('plot_thickens'),
+      weight: 5,
+      help: i18next.t('explain_plot_thickens'),
+    },
+    {
+      item: i18next.t('threat_progress'),
+      weight: 5,
+      help: i18next.t('explain_threat_progress'),
+    },
+    { item: i18next.t('backfire'), weight: 10 },
+    {
+      item: i18next.t('upcoming_problem'),
+      weight: 10,
+      help: i18next.t('explain_upcoming_problem'),
+    },
+    { item: i18next.t('offscreen_problem'), weight: 10 },
+
+    ...commonNeg,
+  ];
+
+  const yesBut = [
+    { item: i18next.t('partial'), weight: 30 },
+    { item: i18next.t('temporary'), weight: 30 },
+    {
+      item: i18next.t('unexpected_result'),
+      weight: 20,
+      help: i18next.t('explain_unexpected_result'),
+    },
+    { item: i18next.t('higher_cost'), weight: 25 },
+
+    ...commonNeg,
+  ];
+
+  const yesAnd = [
+    { item: i18next.t('gain_extra'), weight: 40 },
+    { item: i18next.t('durable'), weight: 40 },
+    {
+      item: i18next.t('momentum'),
+      weight: 40,
+      help: i18next.t('explain_momentum'),
+    },
+    { item: i18next.t('upcoming_windfall'), weight: 30 },
+    { item: i18next.t('offscreen_windfall'), weight: 30 },
+    { item: i18next.t('unexpected_help'), weight: 20 },
+    { item: i18next.t('get_help'), weight: 20 },
+    { item: i18next.t('heroic_action'), weight: 10 },
+    { item: i18next.t('plot_advances'), weight: 20 },
+    { item: i18next.t('gain_ally'), weight: 10 },
+    { item: i18next.t('exceptional'), weight: 10 },
+    { item: i18next.t('plot_link'), weight: 10 },
+    {
+      item: i18next.t('threat_retreat'),
+      weight: 10,
+      help: i18next.t('explain_threat_retreat'),
+    },
+  ];
+
+  const mainAction = [
+    {
+      item: i18next.t('ask_another_question'),
+      weight: 2,
+      help: i18next.t('ask_another_question_help'),
+    },
+    { item: i18next.t('yes_and'), weight: 10, addition: yesAnd },
+    { item: i18next.t('yes'), weight: 5 },
+    { item: i18next.t('yes_if'), weight: 15, addition: yesIf },
+    { item: i18next.t('yes_but'), weight: 5, addition: yesBut },
+    { item: i18next.t('no'), weight: 15 },
+    { item: i18next.t('no_and'), weight: 10, addition: noAnd },
+  ];
+
+  const mainQuestion = [
+    {
+      item: i18next.t('ask_another_question'),
+      weight: 5,
+      help: i18next.t('ask_another_question_help'),
+    },
+    { item: i18next.t('yes_and'), weight: 10 },
+    { item: i18next.t('yes'), weight: 20 },
+    { item: i18next.t('yes_but'), weight: 20 },
+    { item: i18next.t('no_but'), weight: 20 },
+    { item: i18next.t('no'), weight: 20 },
+    { item: i18next.t('no_and'), weight: 10 },
+  ];
+
   const response = weightedRandom(
     type === 'action' ? mainAction : mainQuestion
   );
+
+  console.log(response);
 
   let addition = null;
 
