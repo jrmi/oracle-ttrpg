@@ -6,7 +6,7 @@ import {
   useLayoutEffect,
 } from 'https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module';
 
-import { oracle } from './oracle.js'; 
+import { oracle } from './oracle.js';
 
 const html = htm.bind(h);
 
@@ -31,13 +31,19 @@ const App = () => {
     <div class="content">
       <div class="results" ref="${containerRef}">
         ${previousResults.map((result, index) => {
-          return html`<div
-            class="result"
-            style="${{ opacity: 1 / (previousResults.length - index) }}"
-          >
-            <h2>${result.response.item}</h2>
+          return html`<div class="result" ttabindex="0">
+            <h2 style="${{ opacity: 1 / (previousResults.length - index) }}">
+              ${result.response.item}
+            </h2>
             ${result.addition
-              ? html`<h3>${result.addition.item}</h3>`
+              ? html`<h3
+                  style="${{ opacity: 1 / (previousResults.length - index) }}"
+                >
+                  ${result.addition.item}
+                </h3>`
+              : ''}
+            ${result.addition?.help
+              ? html`<p class="help">${result.addition.help}</p>`
               : ''}
           </div>`;
         })}

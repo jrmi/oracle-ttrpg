@@ -6,25 +6,32 @@ const commonNeg = [
     weight: 30,
     help: 'Explique ce qui te fait perdre du temps.',
   },
-  { item: 'tu le paies de ta personne', weight: 30 },
+  {
+    item: 'tu en paies le prix',
+    weight: 30,
+    help: 'Tu subis une blessure physique ou psychologique.',
+  },
   { item: 'tu consommes une ressource', weight: 20 },
   { item: 'tu te mets en danger', weight: 30 },
 ];
 
 const yesIf = [
-  { item: 'tu sacrifies quelque chose', weight: 5 },
-  { item: "tu sacrifies quelqu'un", weight: 5 },
+  {
+    item: "tu sacrifies quelque chose ou quelqu'un",
+    weight: 10,
+    help: 'Ce tiers va subir des conséquences de ton action.',
+  },
   { item: 'tu te fais aider', weight: 10 },
-  { item: 'tu impliques un objet', weight: 20 },
+  { item: 'tu utilises un objet', weight: 20 },
   {
     item: 'tu modifies tes plans',
     weight: 30,
-    help: "Ce que tu voulais faire n'est pas possible mais une autre solution existe. Trouve là.",
+    help: "Ce que tu voulais faire n'est pas possible mais une autre solution existe. Trouve-la.",
   },
   {
     item: 'tu fais avancer une menace',
     weight: 10,
-    help: "Coche une case d'une menace et explique pourquoi elle avance.",
+    help: "Coche la case d'une menace en lien avec l'intrigue et explique pourquoi elle avance.",
   },
 
   ...commonNeg,
@@ -34,7 +41,7 @@ const noAnd = [
   {
     item: 'tu subis une trahison',
     weight: 5,
-    help: "quelqu'un ou quelque chose te trahie.",
+    help: "Quelqu'un ou quelque chose te trahit.",
   },
   { item: "l'opposition se renforce", weight: 5 },
   {
@@ -51,9 +58,9 @@ const noAnd = [
   {
     item: 'tu annonces un problème à venir',
     weight: 10,
-    help: "ce que tu fais va provoquer un problème plus tard. C'est quoi ?",
+    help: "Ce que tu fais va provoquer un problème plus tard. C'est quoi ?",
   },
-  // { item: 'tu annonces un problème hors cadre', weight: 10,  },
+  { item: 'tu annonces un problème hors-champ', weight: 10 },
 
   ...commonNeg,
 ];
@@ -61,7 +68,11 @@ const noAnd = [
 const yesBut = [
   { item: 'de manière partielle', weight: 30 },
   { item: "c'est temporaire", weight: 30 },
-  { item: 'le résultat est inattendu', weight: 20, help: "Ça marche mais le résultat n'est pas celui attendu." },
+  {
+    item: 'le résultat est inattendu',
+    weight: 20,
+    help: "Ça marche mais le résultat n'est pas celui attendu.",
+  },
   { item: 'ça coûte plus cher que prévu', weight: 25 },
 
   ...commonNeg,
@@ -70,31 +81,47 @@ const yesBut = [
 const yesAnd = [
   { item: 'tu gagnes quelque chose en plus', weight: 40 },
   { item: "c'est durable", weight: 40 },
-  { item: 'tu profites de ton élan', weight: 40 },
+  {
+    item: 'tu profites de ton élan',
+    weight: 40,
+    help: 'La prochaine action dans le même élan est réussie automatiquement.',
+  },
   { item: 'tu annonces une aubaine à venir', weight: 30 },
-  { item: 'tu annonces une aubaine hors cadre', weight: 30 },
+  { item: 'tu annonces une aubaine hors-champ', weight: 30 },
   { item: 'tu obtiens une aide inattendue', weight: 20 },
   { item: 'tu te fais aider', weight: 20 },
-  { item: "c'est héroïque", weight: 20 },
+  { item: "c'est une action héroïque", weight: 10 },
   { item: "ça fait avancer l'intrigue", weight: 20 },
   { item: 'tu gagnes un allié', weight: 10 },
   { item: 'quelque chose d’exceptionnel arrive', weight: 10 },
   { item: 'un lien se fait avec une autre intrigue', weight: 10 },
-  { item: 'une menace recule', weight: 10 },
+  {
+    item: 'une menace recule',
+    weight: 10,
+    help: "Ajoute une case à une menace en lien avec l'intrigue et explique pourquoi elle recule.",
+  },
 ];
 
 const mainAction = [
-  { item: 'Pose une autre question', weight: 2 },
+  {
+    item: 'Pose une autre question',
+    weight: 2,
+    help: "La question ne peut pas être posée car la situation ne le permet pas. Qu'est-ce qui a changé ?",
+  },
   { item: 'Oui, et...', weight: 10, addition: yesAnd },
   { item: 'Oui', weight: 5 },
+  { item: 'Oui, si...', weight: 15, addition: yesIf },
   { item: 'Oui, mais...', weight: 5, addition: yesBut },
-  { item: 'Oui, si...', weight: 20, addition: yesIf },
-  { item: 'Non', weight: 15 },
+  { item: 'Non', weight: 20 },
   { item: 'Non, et...', weight: 10, addition: noAnd },
 ];
 
 const mainQuestion = [
-  { item: 'Pose une autre question', weight: 5 },
+  {
+    item: 'Pose une autre question',
+    weight: 5,
+    help: "La question ne peut pas être posée car la situation ne le permet pas. Qu'est-ce qui a changé ?",
+  },
   { item: 'Oui, et...', weight: 10 },
   { item: 'Oui', weight: 20 },
   { item: 'Oui, mais...', weight: 20 },
@@ -105,8 +132,8 @@ const mainQuestion = [
 
 export const oracle = (type) => {
   const response = weightedRandom(
-  type === 'action' ? mainAction : mainQuestion
-);
+    type === 'action' ? mainAction : mainQuestion
+  );
 
   let addition = null;
 
