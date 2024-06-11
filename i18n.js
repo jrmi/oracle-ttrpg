@@ -6,24 +6,33 @@ export const initI18n = () => {
         .use(i18nextBrowserLanguageDetector)
         .init(
           {
-            fallbackLng: 'en',
-            debug: true,
+            fallbackLng: {
+              'fr-FR': ['fr'],
+              default: ['en'],
+            },
+            supportedLngs: ['en', 'fr'],
+            nonExplicitSupportedLngs: true,
+            debug: false,
             backend: {
               loadPath: '/locales/{{lng}}/{{ns}}.json',
             },
+            detection: {
+              order: [
+                'querystring',
+                'cookie',
+                'localStorage',
+                'navigator',
+                'htmlTag',
+                'path',
+                'subdomain',
+              ],
+              caches: ['localStorage', 'cookie'],
+            },
           },
           (err, t) => {
-            if (err) return console.error(err);
-            //updateContent();
-            resolve();
+            resolve(err);
           }
         );
-
-      /*function updateContent() {
-        document.querySelectorAll('[data-i18n]').forEach((elem) => {
-          elem.innerHTML = i18next.t(elem.getAttribute('data-i18n'));
-        });
-      }*/
     });
   });
 };

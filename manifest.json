@@ -1,5 +1,11 @@
 {
- "name": "App",
+  "name": "Oracle RPG",
+  "short_name": "Oracle",
+  "description": "A solo role-playing game oracle.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
  "icons": [
   {
    "src": "icons/android-icon-36x36.png",

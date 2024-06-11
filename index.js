@@ -51,7 +51,9 @@ const App = () => {
       </div>
     </div>
     <div class="footer">
-      <button onclick="${() => test('question')}">${i18next.t('question')}</button>
+      <button onclick="${() => test('question')}">
+        ${i18next.t('question')}
+      </button>
       <button onclick="${() => test('action')}">${i18next.t('action')}</button>
     </div>
   </div>`;

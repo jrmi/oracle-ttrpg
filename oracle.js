@@ -1,6 +1,112 @@
 import { weightedRandom } from './utils.js';
 
 export const oracle = (type) => {
+  const oracleResultsLess = [
+    {
+      item: i18next.t('costly'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('slow'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('less_betrayal'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('difficult'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('limited'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('fragile'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('doubtful'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('risky'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('unpredictable'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('incomplete'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('inadequate'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('compromise'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('less_temporary'),
+      weight: 5,
+    },
+  ];
+
+  const oracleResultsPlus = [
+    {
+      item: i18next.t('helpful'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('promising'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('stable'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('creative'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('future'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('rich'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('stimulating'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('rewarding'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('plus_durable'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('brilliant'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('plus_momentum'),
+      weight: 5,
+    },
+    {
+      item: i18next.t('robust'),
+      weight: 5,
+    },
+  ];
+
   const commonNeg = [
     {
       item: i18next.t('lose_time'),
@@ -110,10 +216,10 @@ export const oracle = (type) => {
       help: i18next.t('ask_another_question_help'),
     },
     { item: i18next.t('yes_and'), weight: 10, addition: yesAnd },
-    { item: i18next.t('yes'), weight: 5 },
-    { item: i18next.t('yes_if'), weight: 15, addition: yesIf },
+    // { item: i18next.t('yes'), weight: 5 },
+    { item: i18next.t('yes_if'), weight: 20, addition: yesIf },
     { item: i18next.t('yes_but'), weight: 5, addition: yesBut },
-    { item: i18next.t('no'), weight: 15 },
+    // { item: i18next.t('no'), weight: 15 },
     { item: i18next.t('no_and'), weight: 10, addition: noAnd },
   ];
 
@@ -123,19 +229,17 @@ export const oracle = (type) => {
       weight: 5,
       help: i18next.t('ask_another_question_help'),
     },
-    { item: i18next.t('yes_and'), weight: 10 },
-    { item: i18next.t('yes'), weight: 20 },
-    { item: i18next.t('yes_but'), weight: 20 },
-    { item: i18next.t('no_but'), weight: 20 },
-    { item: i18next.t('no'), weight: 20 },
-    { item: i18next.t('no_and'), weight: 10 },
+    { item: i18next.t('yes_and'), weight: 10, addition: oracleResultsPlus },
+    // { item: i18next.t('yes'), weight: 20 },
+    { item: i18next.t('yes_but'), weight: 30, addition: oracleResultsLess },
+    { item: i18next.t('no_but'), weight: 30, addition: oracleResultsPlus },
+    //{ item: i18next.t('no'), weight: 20 },
+    { item: i18next.t('no_and'), weight: 10, addition: oracleResultsLess },
   ];
 
   const response = weightedRandom(
     type === 'action' ? mainAction : mainQuestion
   );
-
-  console.log(response);
 
   let addition = null;
 
