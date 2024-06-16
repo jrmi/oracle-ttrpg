@@ -1,251 +1,156 @@
 import { weightedRandom } from './utils.js';
 
 export const oracle = (type) => {
-  const oracleResultsLess = [
+  const actionStrongYes = [
     {
-      item: i18next.t('costly'),
-      weight: 5,
+      item: i18next.t('momentum'),
+      weight: 8,
+      help: i18next.t('explain_momentum'),
+      noRepeat: true,
     },
-    {
-      item: i18next.t('slow'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('less_betrayal'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('difficult'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('limited'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('fragile'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('doubtful'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('risky'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('unpredictable'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('incomplete'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('inadequate'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('compromise'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('less_temporary'),
-      weight: 5,
-    },
+    { item: i18next.t('upcoming_windfall'), weight: 8, noRepeat: true },
+    { item: i18next.t('plot_advances'), weight: 8, noRepeat: true },
+    { item: i18next.t('heroic_action'), weight: 2, noRepeat: true },
+    { item: i18next.t('get_help'), weight: 2, noRepeat: true },
+    { item: i18next.t('exceptional'), weight: 1, noRepeat: true },
   ];
 
-  const oracleResultsPlus = [
-    {
-      item: i18next.t('helpful'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('promising'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('stable'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('creative'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('future'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('rich'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('stimulating'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('rewarding'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('plus_durable'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('brilliant'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('plus_momentum'),
-      weight: 5,
-    },
-    {
-      item: i18next.t('robust'),
-      weight: 5,
-    },
-  ];
+  const questionStrongYes = [
+    { item: i18next.t('better'), weight: 2, noRepeat: true },
+    { item: i18next.t('strong'), weight: 2, noRepeat: true },
+    { item: i18next.t('get_better'), weight: 2, noRepeat: true },
+    { item: i18next.t('stimulating'), weight: 2, noRepeat: true },
+  ]
 
-  const commonNeg = [
+  const payPrice = [
     {
-      item: i18next.t('lose_time'),
-      weight: 30,
-      help: i18next.t('explain_lose_time'),
-    },
-    {
-      item: i18next.t('pay_price'),
-      weight: 30,
-      help: i18next.t('explain_pay_price'),
-    },
-    { item: i18next.t('consume_resource'), weight: 20 },
-    { item: i18next.t('danger'), weight: 30 },
-  ];
-
-  const yesIf = [
-    {
-      item: i18next.t('sacrifice'),
+      item: i18next.t('suffer'),
       weight: 10,
-      help: i18next.t('explain_sacrifice'),
+      help: i18next.t('explain_suffer'),
+      noRepeat: true,
     },
-    { item: i18next.t('get_help'), weight: 10 },
-    { item: i18next.t('use_object'), weight: 20 },
-    {
-      item: i18next.t('change_plans'),
-      weight: 30,
-      help: i18next.t('explain_change_plans'),
-    },
-    {
-      item: i18next.t('advance_threat'),
-      weight: 10,
-      help: i18next.t('explain_advance_threat'),
-    },
-
-    ...commonNeg,
-  ];
-
-  const noAnd = [
-    {
-      item: i18next.t('betrayal'),
-      weight: 5,
-      help: i18next.t('explain_betrayal'),
-    },
-    { item: i18next.t('oppose_strengthen'), weight: 5 },
-    {
-      item: i18next.t('plot_thickens'),
-      weight: 5,
-      help: i18next.t('explain_plot_thickens'),
-    },
-    {
-      item: i18next.t('threat_progress'),
-      weight: 5,
-      help: i18next.t('explain_threat_progress'),
-    },
-    { item: i18next.t('backfire'), weight: 10 },
     {
       item: i18next.t('upcoming_problem'),
       weight: 10,
       help: i18next.t('explain_upcoming_problem'),
+      noRepeat: true,
     },
-    { item: i18next.t('offscreen_problem'), weight: 10 },
-
-    ...commonNeg,
-  ];
-
-  const yesBut = [
-    { item: i18next.t('partial'), weight: 30 },
-    { item: i18next.t('temporary'), weight: 30 },
     {
-      item: i18next.t('unexpected_result'),
-      weight: 20,
-      help: i18next.t('explain_unexpected_result'),
-    },
-    { item: i18next.t('higher_cost'), weight: 25 },
-
-    ...commonNeg,
-  ];
-
-  const yesAnd = [
-    { item: i18next.t('gain_extra'), weight: 40 },
-    { item: i18next.t('durable'), weight: 40 },
-    {
-      item: i18next.t('momentum'),
-      weight: 40,
-      help: i18next.t('explain_momentum'),
-    },
-    { item: i18next.t('upcoming_windfall'), weight: 30 },
-    { item: i18next.t('offscreen_windfall'), weight: 30 },
-    { item: i18next.t('unexpected_help'), weight: 20 },
-    { item: i18next.t('get_help'), weight: 20 },
-    { item: i18next.t('heroic_action'), weight: 10 },
-    { item: i18next.t('plot_advances'), weight: 20 },
-    { item: i18next.t('gain_ally'), weight: 10 },
-    { item: i18next.t('exceptional'), weight: 10 },
-    { item: i18next.t('plot_link'), weight: 10 },
-    {
-      item: i18next.t('threat_retreat'),
+      item: i18next.t('threat_progress'),
       weight: 10,
-      help: i18next.t('explain_threat_retreat'),
+      help: i18next.t('explain_threat_progress'),
+      noRepeat: true,
+    },
+    {
+      item: i18next.t('betrayal'),
+      weight: 10,
+      help: i18next.t('explain_betrayal'),
+      noRepeat: true,
+    },
+    {
+      item: i18next.t('oppose_strengthen'),
+      weight: 2,
+      help: i18next.t('explain_oppose_strengthen'),
+      noRepeat: true,
+    },
+    {
+      item: i18next.t('exceptional_bad'),
+      weight: 1,
+      help: i18next.t('explain_exceptional_bad'),
+      noRepeat: true,
     },
   ];
+
+  const actionWeakYes = [
+    { item: i18next.t('partially'), weight: 10, noRepeat: true },
+    { item: i18next.t('temporary'), weight: 10, noRepeat: true },
+    // { item: i18next.t('get_worse'), weight: 10, noRepeat: true },
+    {
+      item: i18next.t('if_sacrifice'),
+      weight: 10,
+      help: i18next.t('explain_sacrifice'),
+      noRepeat: true,
+    },
+    {
+      item: i18next.t('if_pay_price'),
+      weight: 30,
+      help: i18next.t('explain_pay_price'),
+      noRepeat: true,
+      addition: payPrice,
+    },
+    {
+      item: i18next.t('if_get_help'),
+      weight: 10,
+      help: i18next.t('explain_get_help'),
+      noRepeat: true,
+    },
+    {
+      item: i18next.t('if_change_plans'),
+      weight: 30,
+      help: i18next.t('explain_change_plans'),
+      noRepeat: true,
+    },
+    { item: i18next.t('if_consume_resource'), weight: 20, noRepeat: true },
+  ];
+
+
+  const questionWeakYes = [
+    { item: i18next.t('partially'), weight: 2, noRepeat: true },
+    { item: i18next.t('temporary'), weight: 2, noRepeat: true },
+    { item: i18next.t('slow'), weight: 2, noRepeat: true },
+    { item: i18next.t('higher_cost'), weight: 2, noRepeat: true },
+    { item: i18next.t('unpredictable'), weight: 2, noRepeat: true },
+    { item: i18next.t('inadequate'), weight: 2, noRepeat: true },
+  ]
+
+  const actionStrongNo = [
+    {
+      item: i18next.t('pay_price'),
+      weight: 30,
+      help: i18next.t('explain_pay_price'),
+      addition: payPrice,
+    },
+  ];
+
+
+  const questionStrongNo = [
+    { item: i18next.t('worse'), weight: 2, noRepeat: true },
+    { item: i18next.t('impossible'), weight: 2, noRepeat: true },
+    // { item: i18next.t('get_worse'), weight: 2, noRepeat: true },
+    { item: i18next.t('disappointing'), weight: 2, noRepeat: true },
+  ]
 
   const mainAction = [
     {
       item: i18next.t('ask_another_question'),
-      weight: 2,
-      help: i18next.t('ask_another_question_help'),
+      weight: 1,
+      help: i18next.t('explain_ask_another_question'),
+      noRepeat: true,
     },
-    { item: i18next.t('yes_and'), weight: 10, addition: yesAnd },
-    // { item: i18next.t('yes'), weight: 5 },
-    { item: i18next.t('yes_if'), weight: 20, addition: yesIf },
-    { item: i18next.t('yes_but'), weight: 5, addition: yesBut },
-    // { item: i18next.t('no'), weight: 15 },
-    { item: i18next.t('no_and'), weight: 10, addition: noAnd },
+    { item: i18next.t('yes_and'), weight: 4, addition: actionStrongYes },
+    // { item: i18next.t('yes_if'), weight: 8, addition: yesIf },
+    // { item: i18next.t('yes_but'), weight: 4, addition: yesBut },
+    { item: i18next.t('weak_yes'), weight: 16, addition: actionWeakYes },
+    { item: i18next.t('no_and'), weight: 4, addition: payPrice },
   ];
 
   const mainQuestion = [
     {
       item: i18next.t('ask_another_question'),
-      weight: 5,
-      help: i18next.t('ask_another_question_help'),
+      weight: 1,
+      help: i18next.t('explain_ask_another_question'),
+      noRepeat: true,
     },
-    { item: i18next.t('yes_and'), weight: 10, addition: oracleResultsPlus },
-    // { item: i18next.t('yes'), weight: 20 },
-    { item: i18next.t('yes_but'), weight: 30, addition: oracleResultsLess },
-    { item: i18next.t('no_but'), weight: 30, addition: oracleResultsPlus },
-    //{ item: i18next.t('no'), weight: 20 },
-    { item: i18next.t('no_and'), weight: 10, addition: oracleResultsLess },
+    { item: i18next.t('yes_and'), weight: 2, addition: questionStrongYes },
+    { item: i18next.t('yes_but'), weight: 8, addition: questionWeakYes },
+    // { item: i18next.t('no_but'), weight: 4, addition: oracleResultsPlus },
+    { item: i18next.t('no_and'), weight: 2, addition: questionStrongNo },
   ];
 
   const response = weightedRandom(
-    type === 'action' ? mainAction : mainQuestion
+    type === 'action' ? mainAction : mainQuestion,
+    type === 'action' ? 'action' : 'question'
   );
 
-  let addition = null;
-
-  if (response.addition) {
-    addition = weightedRandom(response.addition);
-  }
-
-  return { response, addition };
+  return response;
 };

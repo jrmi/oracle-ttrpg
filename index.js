@@ -34,17 +34,21 @@ const App = () => {
         ${previousResults.map((result, index) => {
           return html`<div class="result">
             <h2 style="${{ opacity: 1 / (previousResults.length - index) }}">
-              ${result.response.item}
+              ${result[0].item}
             </h2>
-            ${result.addition
-              ? html`<h3
+            ${result
+              .slice(1)
+              .map(
+                (res) => html`<h3
                   style="${{ opacity: 1 / (previousResults.length - index) }}"
                 >
-                  ${result.addition.item}
+                  ${res.item}
                 </h3>`
-              : ''}
-            ${result.addition?.help
-              ? html`<p class="help">${result.addition.help}</p>`
+              )}
+            ${result.some((res) => res.help)
+              ? html`<div class="help">
+                  ${result.map((res) => html`<p>${res.help}</p>`)}
+                </div>`
               : ''}
           </div>`;
         })}

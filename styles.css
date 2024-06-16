@@ -50,11 +50,11 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.2em ;
 }
 
 h3 {
-  margin-top: 0.2em;
+  margin: 0.2em 0;
   color: var(--light-font-color);
 }
 
