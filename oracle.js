@@ -1,32 +1,35 @@
-import { weightedRandom } from './utils.js';
+import { weightedRandom, clone } from './utils.js';
+import words from './locales/fr/words.js';
 
 export const oracle = (type) => {
   const actionStrongYes = [
     {
+      item: i18next.t('special_yes'),
+      weight: 50,
+      help: i18next.t('explain_special_yes'),
+      noRepeat: true,
+    },
+    {
       item: i18next.t('momentum'),
-      weight: 8,
+      weight: 10,
       help: i18next.t('explain_momentum'),
       noRepeat: true,
     },
-    { item: i18next.t('upcoming_windfall'), weight: 8, noRepeat: true },
-    { item: i18next.t('plot_advances'), weight: 8, noRepeat: true },
+    { item: i18next.t('upcoming_windfall'), weight: 10, noRepeat: true },
     { item: i18next.t('heroic_action'), weight: 2, noRepeat: true },
-    { item: i18next.t('get_help'), weight: 2, noRepeat: true },
-    { item: i18next.t('exceptional'), weight: 1, noRepeat: true },
   ];
 
-  const questionStrongYes = [
-    { item: i18next.t('better'), weight: 2, noRepeat: true },
-    { item: i18next.t('strong'), weight: 2, noRepeat: true },
-    { item: i18next.t('get_better'), weight: 2, noRepeat: true },
-    { item: i18next.t('stimulating'), weight: 2, noRepeat: true },
-  ]
+  const actionWeakYes = [
+    { item: i18next.t('partially'), weight: 10, noRepeat: true },
+    { item: i18next.t('temporary'), weight: 10, noRepeat: true },
+    { item: i18next.t('if_consume_resource'), weight: 10, noRepeat: true },
+  ];
 
   const payPrice = [
     {
-      item: i18next.t('suffer'),
-      weight: 10,
-      help: i18next.t('explain_suffer'),
+      item: i18next.t('special_no'),
+      weight: 50,
+      help: i18next.t('explain_special_no'),
       noRepeat: true,
     },
     {
@@ -36,121 +39,132 @@ export const oracle = (type) => {
       noRepeat: true,
     },
     {
-      item: i18next.t('threat_progress'),
-      weight: 10,
-      help: i18next.t('explain_threat_progress'),
-      noRepeat: true,
-    },
-    {
       item: i18next.t('betrayal'),
       weight: 10,
       help: i18next.t('explain_betrayal'),
       noRepeat: true,
     },
-    {
-      item: i18next.t('oppose_strengthen'),
-      weight: 2,
-      help: i18next.t('explain_oppose_strengthen'),
-      noRepeat: true,
-    },
-    {
-      item: i18next.t('exceptional_bad'),
-      weight: 1,
-      help: i18next.t('explain_exceptional_bad'),
-      noRepeat: true,
-    },
+    { item: i18next.t('consume_resource'), weight: 10, noRepeat: true },
   ];
-
-  const actionWeakYes = [
-    { item: i18next.t('partially'), weight: 10, noRepeat: true },
-    { item: i18next.t('temporary'), weight: 10, noRepeat: true },
-    // { item: i18next.t('get_worse'), weight: 10, noRepeat: true },
-    {
-      item: i18next.t('if_sacrifice'),
-      weight: 10,
-      help: i18next.t('explain_sacrifice'),
-      noRepeat: true,
-    },
-    {
-      item: i18next.t('if_pay_price'),
-      weight: 30,
-      help: i18next.t('explain_pay_price'),
-      noRepeat: true,
-      addition: payPrice,
-    },
-    {
-      item: i18next.t('if_get_help'),
-      weight: 10,
-      help: i18next.t('explain_get_help'),
-      noRepeat: true,
-    },
-    {
-      item: i18next.t('if_change_plans'),
-      weight: 30,
-      help: i18next.t('explain_change_plans'),
-      noRepeat: true,
-    },
-    { item: i18next.t('if_consume_resource'), weight: 20, noRepeat: true },
-  ];
-
-
-  const questionWeakYes = [
-    { item: i18next.t('partially'), weight: 2, noRepeat: true },
-    { item: i18next.t('temporary'), weight: 2, noRepeat: true },
-    { item: i18next.t('slow'), weight: 2, noRepeat: true },
-    { item: i18next.t('higher_cost'), weight: 2, noRepeat: true },
-    { item: i18next.t('unpredictable'), weight: 2, noRepeat: true },
-    { item: i18next.t('inadequate'), weight: 2, noRepeat: true },
-  ]
-
-  const actionStrongNo = [
-    {
-      item: i18next.t('pay_price'),
-      weight: 30,
-      help: i18next.t('explain_pay_price'),
-      addition: payPrice,
-    },
-  ];
-
-
-  const questionStrongNo = [
-    { item: i18next.t('worse'), weight: 2, noRepeat: true },
-    { item: i18next.t('impossible'), weight: 2, noRepeat: true },
-    // { item: i18next.t('get_worse'), weight: 2, noRepeat: true },
-    { item: i18next.t('disappointing'), weight: 2, noRepeat: true },
-  ]
 
   const mainAction = [
     {
       item: i18next.t('ask_another_question'),
-      weight: 1,
+      weight: 4,
       help: i18next.t('explain_ask_another_question'),
       noRepeat: true,
     },
-    { item: i18next.t('yes_and'), weight: 4, addition: actionStrongYes },
-    // { item: i18next.t('yes_if'), weight: 8, addition: yesIf },
-    // { item: i18next.t('yes_but'), weight: 4, addition: yesBut },
-    { item: i18next.t('weak_yes'), weight: 16, addition: actionWeakYes },
-    { item: i18next.t('no_and'), weight: 4, addition: payPrice },
+    { item: i18next.t('strong_yes'), weight: 5, addition: actionStrongYes },
+    { item: i18next.t('yes'), weight: 33 },
+    { item: i18next.t('weak_yes'), weight: 10, addition: actionWeakYes },
+    { item: i18next.t('no'), weight: 33 },
+    { item: i18next.t('strong_no'), weight: 5, addition: payPrice },
   ];
 
-  const mainQuestion = [
+  const mainActionLikely = clone(mainAction);
+  const mainActionUnlikely = clone(mainAction);
+
+  mainActionLikely[1].weight = 15; // Yes and
+  mainActionLikely[2].weight = 25; // Yes
+  mainActionLikely[4].weight = 15; // No
+  mainActionLikely[5].weight = 5; // No and
+
+  mainActionUnlikely[1].weight = 5; // Yes and
+  mainActionUnlikely[2].weight = 15; // Yes
+  mainActionUnlikely[4].weight = 25; // No
+  mainActionUnlikely[5].weight = 15; // No and
+
+  const questionWeakYes = [
+    { item: i18next.t('partially'), weight: 2, noRepeat: true },
+    { item: i18next.t('temporary'), weight: 2, noRepeat: true },
+    { item: i18next.t('costly'), weight: 2, noRepeat: true },
+  ];
+
+  const mainQuestion5050 = [
     {
       item: i18next.t('ask_another_question'),
-      weight: 1,
+      weight: 5,
       help: i18next.t('explain_ask_another_question'),
       noRepeat: true,
     },
-    { item: i18next.t('yes_and'), weight: 2, addition: questionStrongYes },
-    { item: i18next.t('yes_but'), weight: 8, addition: questionWeakYes },
-    // { item: i18next.t('no_but'), weight: 4, addition: oracleResultsPlus },
-    { item: i18next.t('no_and'), weight: 2, addition: questionStrongNo },
+    { item: i18next.t('strong_yes'), weight: 5 },
+    { item: i18next.t('yes'), weight: 35 },
+    { item: i18next.t('weak_yes'), weight: 10, addition: questionWeakYes },
+    { item: i18next.t('no'), weight: 40 },
+    { item: i18next.t('strong_no'), weight: 5 },
   ];
 
-  const response = weightedRandom(
-    type === 'action' ? mainAction : mainQuestion,
-    type === 'action' ? 'action' : 'question'
-  );
+  const mainQuestionLikely = clone(mainQuestion5050);
+  const mainQuestionUnlikely = clone(mainQuestion5050);
 
-  return response;
+  mainQuestionLikely[2].weight = 50;
+  mainQuestionLikely[3].weight = 15;
+  mainQuestionLikely[4].weight = 20;
+
+  mainQuestionUnlikely[2].weight = 15;
+  mainQuestionUnlikely[4].weight = 60;
+
+  const unexpected = [
+    { item: i18next.t('new_opposition'), weight: 2, noRepeat: true },
+    { item: i18next.t('new_helper'), weight: 2, noRepeat: true },
+    { item: i18next.t('location_dangerous'), weight: 2, noRepeat: true },
+    { item: i18next.t('change_location'), weight: 2, noRepeat: true },
+    {
+      item: i18next.t('betrayal'),
+      weight: 2,
+      help: i18next.t('explain_betrayal'),
+      noRepeat: true,
+    },
+  ];
+
+  const sceneQuestion = [
+    { item: i18next.t('as_planned'), weight: 60 },
+    { item: i18next.t('unexpected_event'), weight: 40, addition: unexpected },
+  ];
+
+  const resourceQuestion5050 = [
+    { item: i18next.t('yes'), weight: 30 },
+    { item: i18next.t('weak_yes'), weight: 20, addition: questionWeakYes },
+    { item: i18next.t('no'), weight: 30 },
+  ];
+
+  const spark = [
+    { item: '1', weight: 1 },
+    { item: '2', weight: 2 },
+    { item: '3', weight: 3 },
+    { item: '4', weight: 4 },
+    { item: '5', weight: 5 },
+    { item: '6', weight: 6 },
+  ];
+
+  const actionType = [
+    { item: i18next.t('heart'), weight: 1 },
+    { item: i18next.t('head'), weight: 1 },
+    { item: i18next.t('mouth'), weight: 1 },
+    { item: i18next.t('guts'), weight: 1 },
+    { item: i18next.t('hands'), weight: 1 },
+    { item: i18next.t('soul'), weight: 1 },
+  ];
+
+  const types = {
+    action5050: mainAction,
+    actionLikely: mainActionLikely,
+    actionUnlikely: mainActionUnlikely,
+    question5050: mainQuestion5050,
+    questionLikely: mainQuestionLikely,
+    questionUnlikely: mainQuestionUnlikely,
+    sceneQuestion,
+    spark,
+    actionType,
+  };
+
+  Object.entries(words).forEach(([theme, values]) => {
+    types[theme] = values.map((word) => ({
+      item: word.replace(/^./, (l) => l.toUpperCase()),
+      weight: 1,
+      noRepeat: true,
+    }));
+  });
+
+  return weightedRandom(types[type]);
 };

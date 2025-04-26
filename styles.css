@@ -6,8 +6,10 @@ body {
   --background-color: #c08552;
   --font-color: #4b56f6;
   --background-color: #ccf5ec;
-  --font-color: #6F07E8;
-  --background-color: #DCFDC8;
+  --font-color: #6f07e8;
+  --background-color: #dcfdc8;
+  --font-color: #d0cfcc;
+  --background-color: #3f5466;
   --button-font-color: var(--background-color);
   --button-background-color: var(--font-color);
   --light-font-color: color-mix(
@@ -15,7 +17,11 @@ body {
     var(--background-color) 30%,
     var(--font-color)
   );
-  --light-background-color: color-mix(in srgb, black 10%, var(--background-color));
+  --light-background-color: color-mix(
+    in srgb,
+    black 10%,
+    var(--background-color)
+  );
   background-color: var(--light-background-color);
 }
 
@@ -50,7 +56,7 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 0.2em ;
+  margin-bottom: 0.2em;
 }
 
 h3 {
@@ -73,9 +79,32 @@ h3 {
 .result {
   padding: 0;
   word-break: break-word;
-  margin-bottom: 10px;
-  text-align: center;
+  padding: 18px 5px;
+  text-align: left;
   border-top: 1px solid var(--light-font-color);
+  display: flex;
+  justify-content: flex-start;
+  justify-content: flex-start;
+  font-size: 1.6em;
+  gap: 5px;
+  align-items: baseline;
+  position: relative;
+}
+
+.sub {
+  /* font-size: 0.8em; */
+  color: var(--light-font-color);
+}
+
+.result-category {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  font-size: 0.7rem;
+  background-color: var(--button-background-color);
+  color: var(--background-color);
+  padding: 1px 2px;
+  border-radius: 2px;
 }
 
 .footer {
@@ -83,6 +112,7 @@ h3 {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 2px;
   padding-top: 20px;
 }
@@ -90,7 +120,7 @@ h3 {
 .footer button {
   flex: 1;
   margin: 0;
-  padding: 25px 0px;
+  padding: 15px 5px;
   font-size: 25px;
   cursor: pointer;
   border: none;
@@ -125,11 +155,11 @@ input[type='number'] {
   display: block;
   box-sizing: border-box;
   position: fixed;
-  top: 10px;
+  top: 50px;
   left: calc(50% - 175px);
   width: 350px;
   padding: 10px;
-  background-color:  var(--light-background-color);
+  background-color: var(--light-background-color);
 }
 
 @media (min-width: 600px) {
