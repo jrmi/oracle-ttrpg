@@ -15,67 +15,37 @@ const html = htm.bind(h);
 const tabs = [
   {
     key: 'oracle',
-    label: () => i18next.t('oracle'),
+    label: () => i18next.t('Oracle'),
     buttons: [
-      { type: 'questionUnlikely', label: () => i18next.t('question_unlikely') },
-      { type: 'question5050', label: () => i18next.t('question_5050') },
-      { type: 'questionLikely', label: () => i18next.t('question_likely') },
+      { type: 'questionUnlikely', label: () => i18next.t('Unlikely') },
+      { type: 'question5050', label: () => i18next.t('50/50') },
+      { type: 'questionLikely', label: () => i18next.t('Likely') },
     ],
   },
   {
-    key: 'inspiration',
-    label: () => i18next.t('inspiration'),
+    key: 'oracle2',
+    label: () => i18next.t('Oracle'),
     buttons: [
-      { type: 'inspiration', label: () => i18next.t('inspiration') },
-      { type: 'action', label: () => i18next.t('action') },
-      { type: 'focus', label: () => i18next.t('focus') },
-      { type: 'disposition', label: () => i18next.t('disposition') },
-      { type: 'motivation', label: () => i18next.t('motivation') },
-      { type: 'method', label: () => i18next.t('method') },
+      { type: 'quantity', label: () => i18next.t('Quantity') },
+      { type: 'quality', label: () => i18next.t('Quality') },
+      { type: 'spark', label: () => i18next.t('Spark check') },
     ],
   },
-  {
-    key: 'npc',
-    label: () => i18next.t('npc'),
-    buttons: [
-      { type: 'npc_archetype', label: () => i18next.t('archetype') },
-      {
-        type: 'npc_distinctive_feature',
-        label: () => i18next.t('distinctive_feature'),
-      },
-      {
-        type: 'actionType',
-        label: () => i18next.t('action_type'),
-      },
-    ],
-  },
-  {
-    key: 'location',
-    label: () => i18next.t('location'),
-    buttons: [
-      { type: 'location', label: () => i18next.t('location') },
-      { type: 'location_qualifier', label: () => i18next.t('qualifier') },
-    ],
-  },
-  {
-    key: 'spark',
-    label: () => i18next.t('spark'),
-    buttons: [{ type: 'spark', label: () => i18next.t('spark') }],
-  },
-  /*{
-    key: 'action',
-    label: () => i18next.t('action'),
-    buttons: [
-      { type: 'actionUnlikely', label: () => i18next.t('action_unlikely') },
-      { type: 'action5050', label: () => i18next.t('action_5050') },
-      { type: 'actionLikely', label: () => i18next.t('action_likely') },
-    ],
-  },*/
   {
     key: 'scene',
-    label: () => i18next.t('scene'),
+    label: () => i18next.t('Inspiration'),
     buttons: [
-      { type: 'sceneQuestion', label: () => i18next.t('scene_question') },
+      { type: 'actionInspiration', label: () => i18next.t('Action') },
+      { type: 'newScene', label: () => i18next.t('New scene') },
+    ],
+  },
+  {
+    key: 'generate',
+    label: () => i18next.t('Generate'),
+    buttons: [
+      { type: 'fullNPC', label: () => i18next.t('NPC') },
+      { type: 'fullLocation', label: () => i18next.t('Location') },
+      { type: 'fullPlot', label: () => i18next.t('Plot') },
     ],
   },
 ];
@@ -106,7 +76,7 @@ const App = () => {
       const result = oracle(type);
       const newPreviousResult = [
         ...prev.slice(-20),
-        { items: result, label, category: currentTab.label() },
+        { result, label, category: currentTab.label() },
       ];
       return newPreviousResult;
     });
@@ -129,15 +99,7 @@ const App = () => {
             class="result"
             style="${{ opacity: 1 / (previousResults.length - index) }}"
           >
-            <div>${result.items[0].item}</div>
-            ${result.items
-              .slice(1)
-              .map((res) => html`<div class="sub">${res.item}</div>`)}
-            ${result.items.some((res) => res.help)
-              ? html`<div class="help">
-                  ${result.items.map((res) => html`<p>${res.help}</p>`)}
-                </div>`
-              : ''}
+            <div>${result.result}</div>
             <div class="result-category">
               ${result.category} - ${result.label}
             </div>
