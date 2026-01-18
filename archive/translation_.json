@@ -1,0 +1,54 @@
+{
+  "loom_of_fate": "Oracle",
+  "question": "Question",
+  "question_5050": "50/50",
+  "question_likely": "Probable",
+  "question_unlikely": "Improbable",
+  "action_5050": "50/50",
+  "action_likely": "Probable",
+  "action_unlikely": "Improbable",
+  "action": "Action",
+  "scene": "Scène",
+  "spark": "Étincelle",
+  "npc": "PNJ",
+  "location": "Lieu",
+  "oracle": "Oracle",
+
+  "ask_another_question": "🤔 Fausse piste",
+  "strong_yes": "😎 Oui, et...",
+  "yes": "😀 Oui",
+  "weak_yes <weakYes>": "😅 Oui mais <weakYes>",
+  "no": "😢 Non",
+  "strong_no": "😭 Non, et...",
+
+  "special_yes": "Événement très favorable",
+  "momentum": "Tu profites de ton élan",
+  "upcoming_windfall": "Tu annonces une aubaine",
+  "heroic_action": "C'est une action héroïque",
+
+  "special_no": "Événement très défavorable",
+  "upcoming_problem": "Tu annonces un problème",
+  "betrayal": "Tu subis une trahison",
+  "consume_resource": "Tu consommes une ressource",
+
+  "partially": "partiellement",
+  "temporary": "temporairement",
+  "if_consume_resource": "Si tu consommes une ressource",
+
+  "as_planned": "Comme prévu",
+  "unexpected_event": "Un imprévu",
+
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4",
+  "5": "5",
+  "6": "6",
+
+  "heart": "Avec son Cœur",
+  "head": "Avec sa Tête",
+  "mouth": "Avec sa Langue",
+  "guts": "Avec ses Tripes",
+  "hands": "Avec ses Mains",
+  "soul": "Avec son Âme"
+}

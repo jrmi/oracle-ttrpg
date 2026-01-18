@@ -5,6 +5,7 @@ import {
   useRef,
   useLayoutEffect,
 } from 'https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module';
+import { micromark } from 'https://esm.sh/micromark@3?bundle';
 
 import { oracle } from './oracle.js';
 import { initI18n } from './i18n.js';
@@ -24,11 +25,11 @@ const tabs = [
   },
   {
     key: 'oracle2',
-    label: () => i18next.t('Oracle'),
+    label: () => i18next.t('Oracle') + ' 2',
     buttons: [
-      { type: 'quantity', label: () => i18next.t('Quantity') },
-      { type: 'quality', label: () => i18next.t('Quality') },
-      { type: 'spark', label: () => i18next.t('Spark check') },
+      { type: 'level', label: () => i18next.t('Expectation') },
+      { type: 'clock', label: () => i18next.t('Clock') },
+      { type: 'inspirationSeed', label: () => i18next.t('Inspiration') },
     ],
   },
   {
@@ -88,25 +89,36 @@ const App = () => {
     }
   }, [previousResults, mode]);
 
+  const results =
+    previousResults.length > 0
+      ? html`<div class="results" ref="${containerRef}">
+          ${previousResults.map((result, index) => {
+            return html`<div
+              class="result"
+              style="${{ opacity: 1 / (previousResults.length - index) }}"
+            >
+              <div
+                dangerouslySetInnerHTML=${{ __html: micromark(result.result) }}
+              />
+              <div class="result-category">
+                ${result.category} - ${result.label}
+              </div>
+            </div>`;
+          })}
+        </div>`
+      : html`<div class="empty-state">
+          <span onClick="${() => onSwipe('left')}">${i18next.t('Oracle for TTRPG')}</span>
+        </div>`;
+
   return html`<div class="container">
     <header>
-      <h1 onClick="${() => onSwipe('left')}">${currentTab.label()}</h1>
+      ${previousResults.length > 0 &&
+      html`<h1 onClick="${() => onSwipe('left')}">${currentTab.label()}</h1>`}
+      <button class="clear" onClick="${() => setPreviousResults([])}">
+        ${i18next.t('Clear')}
+      </button>
     </header>
-    <div class="content">
-      <div class="results" ref="${containerRef}">
-        ${previousResults.map((result, index) => {
-          return html`<div
-            class="result"
-            style="${{ opacity: 1 / (previousResults.length - index) }}"
-          >
-            <div>${result.result}</div>
-            <div class="result-category">
-              ${result.category} - ${result.label}
-            </div>
-          </div>`;
-        })}
-      </div>
-    </div>
+    <div class="content">${results}</div>
     <div class="footer">
       ${currentTab.buttons.map(
         (btn) =>

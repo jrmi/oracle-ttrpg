@@ -10,6 +10,12 @@ body {
   --background-color: #dcfdc8;
   --font-color: #d0cfcc;
   --background-color: #3f5466;
+  --font-color: #eeeeee;
+  --background-color: #121212;
+  --font-color: #fec11b;
+  --background-color: #232426;
+  --font-color: #a99985;
+  --background-color: #252233;
   --button-font-color: var(--background-color);
   --button-background-color: var(--font-color);
   --light-font-color: color-mix(
@@ -64,10 +70,22 @@ h3 {
   color: var(--light-font-color);
 }
 
+header {
+  position: relative;
+}
+
 .content {
   padding: 0 10px;
   flex: 1;
   overflow: hidden;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  height: 40vh;
 }
 
 .results {
@@ -91,8 +109,20 @@ h3 {
   position: relative;
 }
 
+.result p {
+  margin: 0;
+}
+
+.result ul {
+  margin: 0;
+  padding: 0;
+}
+
+.result li::before {
+  content: '- ';
+}
+
 .sub {
-  /* font-size: 0.8em; */
   color: var(--light-font-color);
 }
 
@@ -129,7 +159,7 @@ h3 {
   color: var(--button-font-color);
 }
 
-button:hover {
+.footer button:hover {
   background-color: color-mix(
     in srgb,
     white 10%,
@@ -148,6 +178,21 @@ input[type='number'] {
 
 .help {
   display: none;
+}
+
+.clear {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--font-color);
+}
+
+.clear:hover {
+  background-color: transparent;
 }
 
 :hover > .help,

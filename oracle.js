@@ -1,12 +1,8 @@
-import { weightedRandom, clone } from './utils.js';
 import words from './locales/fr/words.js';
 
 import story from './story.js';
 
-// Function to pick an oracle
 export function oracle(type) {
-  // Define all domains
-
   const data = {
     weakYes: [
       { label: i18next.t('partially'), weight: 10 },
@@ -41,62 +37,76 @@ export function oracle(type) {
       { label: i18next.t('Strong no'), weight: 5 },
     ],
 
+    level: [
+      { label: '➕➕', weight: 5 },
+      { label: '➕', weight: 20 },
+      { label: '👌', weight: 50 },
+      { label: '➖', weight: 20 },
+      { label: '➖➖', weight: 5 },
+    ],
+
+
     sceneQuestion: [
       { label: i18next.t('Expected scene'), weight: 50 },
-      { label: i18next.t('Alteration: {{sceneAlteration}}'), weight: 30 },
-      { label: i18next.t('Random event: {{randomEvent}}'), weight: 20 },
+      { label: i18next.t('Alteration seed'), weight: 30 },
+      { label: i18next.t('Random event seed'), weight: 20 },
+    ],
+
+    inspirationSeed: [
+      {
+        label: i18next.t('Inspiration seed'),
+      },
     ],
 
     actionInspiration: [
       {
-        label: '{{actionType}} - {{action}} {{focus}}',
+        label: i18next.t('Action inspiration seed'),
       },
     ],
 
     newScene: [
       {
-        label: '{{sceneQuestion}} - {{newSceneQuestion}}',
+        label: '{{sceneQuestion}}\n\n{{newSceneQuestion}}',
       },
     ],
 
     fullNPC: [
       {
-        label:
-          '{{name_syllables}} {{name_syllables}} {{name_syllables}} - {{npc_archetype}} - {{npc_distinctive_feature}} - {{npc_goal}} {{focus}} - {{disposition}}',
+        label:i18next.t(
+          'NPC seed'
+        ),
       },
     ],
 
     fullLocation: [
       {
-        label:
-          '{{name_syllables}} {{name_syllables}} {{name_syllables}} - {{location}} - {{location_qualifier}} - {{inspiration}}, {{inspiration}}',
+        label:i18next.t(
+          'Location seed'
+        ),
+          
       },
     ],
 
     fullPlot: [
       {
         label: i18next.t(
-          '{{plot_actor}} {{action}} {{focus}} for {{motivation}}'
+          'Plot seed'
         ),
       },
     ],
 
-    spark: [
-      { label: '1', weight: 1 },
-      { label: '2', weight: 2 },
-      { label: '3', weight: 3 },
-      { label: '4', weight: 4 },
-      { label: '5', weight: 5 },
-      { label: '6', weight: 6 },
+    inspirationTriplet: [{
+          label: '({{inspiration}}, {{inspiration}}, {{inspiration}})',
+          weight: 1,
+      },
     ],
 
     actionType: [
-      { label: i18next.t('Use your heart'), weight: 1 },
-      { label: i18next.t('Use your head'), weight: 1 },
-      { label: i18next.t('Use your mouth'), weight: 1 },
-      { label: i18next.t('Use your guts'), weight: 1 },
-      { label: i18next.t('Use your muscles'), weight: 1 },
-      { label: i18next.t('Use your soul'), weight: 1 },
+      { label: i18next.t('Use heart'), weight: 1 },
+      { label: i18next.t('Use head'), weight: 1 },
+      { label: i18next.t('Use mouth'), weight: 1 },
+      { label: i18next.t('Use guts'), weight: 1 },
+      { label: i18next.t('Use muscles'), weight: 1 },
     ],
     sceneAlteration: [
       { label: i18next.t('Increase tension'), weight: 1 },
@@ -105,25 +115,25 @@ export function oracle(type) {
       { label: i18next.t('Location more favorable'), weight: 1 },
       {
         label: i18next.t(
-          'Introduce goods news ({{inspiration}}, {{inspiration}})'
+          'Introduce goods news {{inspirationTriplet}}'
         ),
         weight: 1,
       },
       {
         label: i18next.t(
-          'Introduce bad news ({{inspiration}}, {{inspiration}})'
+          'Introduce bad news {{inspirationTriplet}}'
         ),
         weight: 1,
       },
       {
         label: i18next.t(
-          'Bring someone good ({{inspiration}}, {{inspiration}})'
+          'Bring someone good {{inspirationTriplet}}'
         ),
         weight: 1,
       },
       {
         label: i18next.t(
-          'Bring someone bad ({{inspiration}}, {{inspiration}})'
+          'Bring someone bad {{inspirationTriplet}}'
         ),
         weight: 1,
       },
@@ -151,7 +161,7 @@ export function oracle(type) {
       },
       {
         label: i18next.t(
-          'Deus ex machina ({{inspiration}}, {{inspiration}}, {{inspiration}})'
+          'Deus ex machina {{inspirationTriplet}}'
         ),
         weight: 1,
       },
@@ -160,32 +170,32 @@ export function oracle(type) {
     newSceneQuestion: [
       {
         label: i18next.t(
-          'Describe what you see. ({{inspiration}}, {{inspiration}})'
+          'Describe what you see. {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'A detail attract your attention. What is it? ({{inspiration}}, {{inspiration}})'
+          'A detail attract your attention. What is it? {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'A detail attracts your attention. What is it? ({{inspiration}}, {{inspiration}})'
+          'A detail attracts your attention. What is it? {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'A detail calls your attention. What is it? ({{inspiration}}, {{inspiration}})'
+          'A detail calls your attention. What is it? {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'Narrate a memory. ({{inspiration}}, {{inspiration}})'
+          'Narrate a memory. {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'Something is dangerous here, what is it? ({{inspiration}}, {{inspiration}})'
+          'Something is dangerous here, what is it? {{inspirationTriplet}}'
         ),
       },
       {
@@ -196,12 +206,12 @@ export function oracle(type) {
       },
       {
         label: i18next.t(
-          'Describe what you hear. ({{inspiration}}, {{inspiration}})'
+          'Describe what you hear. {{inspirationTriplet}}'
         ),
       },
       {
         label: i18next.t(
-          'Describe what you smell. ({{inspiration}}, {{inspiration}})'
+          'Describe what you smell. {{inspirationTriplet}}'
         ),
       },
       {
@@ -222,8 +232,6 @@ export function oracle(type) {
       ])
     )
   );
-
-  console.log(data);
 
   return story(`{{${type}}}`, data);
 }
