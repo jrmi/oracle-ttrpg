@@ -64,7 +64,7 @@ export function oracle(type) {
   story.addDomainEntries('fullNPC', [
     {
       label:
-        '{{name_syllables}} {{name_syllables}} {{name_syllables}} - {{npc_archetype}} - {{npc_distinctive_feature}} - {{npc_goal}} {{focus}} - {{disposition}}',
+        '{{name_syllables}} {{name_syllables}} {{name_syllables}} - {{actor}} - {{npc_distinctive_feature}} - {{action}} {{focus}} - {{disposition}}',
     },
   ]);
 
