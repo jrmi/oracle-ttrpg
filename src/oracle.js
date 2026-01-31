@@ -1,6 +1,13 @@
-import words from '../locales/fr/words.js';
+import enWords from '../locales/en/words.js';
+import frWords from '../locales/fr/words.js';
 
 import story from './story.js';
+
+const getWords = () => {
+  const resolved = i18next?.resolvedLanguage || i18next?.language || 'en';
+  const base = resolved.split('-')[0];
+  return base === 'fr' ? frWords : enWords;
+};
 
 export function oracle(type) {
   const data = {
@@ -223,10 +230,10 @@ export function oracle(type) {
   Object.assign(
     data,
     Object.fromEntries(
-      Object.entries(words).map(([theme, values]) => [
-        theme,
-        values.map((word) => ({
-          label: word,
+    Object.entries(getWords()).map(([theme, values]) => [
+      theme,
+      values.map((word) => ({
+        label: word,
           weight: 1,
         })),
       ])
