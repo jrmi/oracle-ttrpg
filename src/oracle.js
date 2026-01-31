@@ -1,4 +1,4 @@
-import words from './locales/fr/words.js';
+import words from '../locales/fr/words.js';
 
 import story from './story.js';
 
