@@ -38,6 +38,7 @@ const tabs = [
     buttons: [
       { type: 'actionInspiration', label: () => i18next.t('Action') },
       { type: 'newScene', label: () => i18next.t('New scene') },
+      { type: 'eventSeed', label: () => i18next.t('Event') },
     ],
   },
   {

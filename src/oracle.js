@@ -71,6 +71,92 @@ export function oracle(type) {
       },
     ],
 
+    eventSeed: [
+      {
+        label: '{{eventCategory}}',
+      },
+    ],
+    eventCategory: [
+      {
+        label: `**${i18next.t('event.space.category')}**\n\n{{event_space}}`,
+        weight: 1,
+      },
+      {
+        label: `**${i18next.t('event.tech.category')}**\n\n{{event_tech}}`,
+        weight: 1,
+      },
+      {
+        label: `**${i18next.t('event.factions.category')}**\n\n{{event_factions}}`,
+        weight: 1,
+      },
+      {
+        label: `**${i18next.t('event.mystery.category')}**\n\n{{event_mystery}}`,
+        weight: 1,
+      },
+      {
+        label: `**${i18next.t('event.complications.category')}**\n\n{{event_complications}}`,
+        weight: 1,
+      },
+      {
+        label: `**${i18next.t('event.personal.category')}**\n\n{{event_personal}}`,
+        weight: 1,
+      },
+    ],
+    event_space: [
+      { label: i18next.t('event.space.1') },
+      { label: i18next.t('event.space.2') },
+      { label: i18next.t('event.space.3') },
+      { label: i18next.t('event.space.4') },
+      { label: i18next.t('event.space.5') },
+      { label: i18next.t('event.space.6') },
+      { label: i18next.t('event.space.7') },
+    ],
+    event_tech: [
+      { label: i18next.t('event.tech.1') },
+      { label: i18next.t('event.tech.2') },
+      { label: i18next.t('event.tech.3') },
+      { label: i18next.t('event.tech.4') },
+      { label: i18next.t('event.tech.5') },
+      { label: i18next.t('event.tech.6') },
+      { label: i18next.t('event.tech.7') },
+    ],
+    event_factions: [
+      { label: i18next.t('event.factions.1') },
+      { label: i18next.t('event.factions.2') },
+      { label: i18next.t('event.factions.3') },
+      { label: i18next.t('event.factions.4') },
+      { label: i18next.t('event.factions.5') },
+      { label: i18next.t('event.factions.6') },
+      { label: i18next.t('event.factions.7') },
+    ],
+    event_mystery: [
+      { label: i18next.t('event.mystery.1') },
+      { label: i18next.t('event.mystery.2') },
+      { label: i18next.t('event.mystery.3') },
+      { label: i18next.t('event.mystery.4') },
+      { label: i18next.t('event.mystery.5') },
+      { label: i18next.t('event.mystery.6') },
+      { label: i18next.t('event.mystery.7') },
+    ],
+    event_complications: [
+      { label: i18next.t('event.complications.1') },
+      { label: i18next.t('event.complications.2') },
+      { label: i18next.t('event.complications.3') },
+      { label: i18next.t('event.complications.4') },
+      { label: i18next.t('event.complications.5') },
+      { label: i18next.t('event.complications.6') },
+      { label: i18next.t('event.complications.7') },
+    ],
+    event_personal: [
+      { label: i18next.t('event.personal.1') },
+      { label: i18next.t('event.personal.2') },
+      { label: i18next.t('event.personal.3') },
+      { label: i18next.t('event.personal.4') },
+      { label: i18next.t('event.personal.5') },
+      { label: i18next.t('event.personal.6') },
+      { label: i18next.t('event.personal.7') },
+    ],
+
     newScene: [
       {
         label: '{{sceneQuestion}}\n\n{{newSceneQuestion}}',
