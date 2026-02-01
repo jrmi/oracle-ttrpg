@@ -55,7 +55,8 @@ const tabs = [
 const max = tabs.length;
 
 const App = () => {
-  const containerRef = useRef(null);
+  const contentRef = useRef(null);
+  const resultsRef = useRef(null);
   const [previousResults, setPreviousResults] = useState(() => []);
   const [mode, setMode] = useState(0);
 
@@ -71,7 +72,7 @@ const App = () => {
 
   const currentTab = tabs[mode];
 
-  useSwipe(containerRef, onSwipe);
+  useSwipe(contentRef, onSwipe);
 
   const test = (type, label) => {
     setPreviousResults((prev) => {
@@ -85,14 +86,17 @@ const App = () => {
   };
 
   useLayoutEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    if (resultsRef.current) {
+      resultsRef.current.scrollTop = resultsRef.current.scrollHeight;
     }
   }, [previousResults, mode]);
 
+  const previousTab = tabs[(mode - 1 + max) % max];
+  const nextTab = tabs[(mode + 1) % max];
+
   const results =
     previousResults.length > 0
-      ? html`<div class="results" ref="${containerRef}">
+      ? html`<div class="results" ref="${resultsRef}">
           ${previousResults.map((result, index) => {
             return html`<div
               class="result"
@@ -108,18 +112,45 @@ const App = () => {
           })}
         </div>`
       : html`<div class="empty-state">
-          <span onClick="${() => onSwipe('left')}">${i18next.t('ui.tagline')}</span>
+          <span
+            class="empty-state-title"
+            onClick="${() => onSwipe('left')}"
+          >
+            ${i18next.t('ui.tagline')}
+          </span>
+          <div class="empty-state-hint">${i18next.t('ui.swipe_hint')}</div>
         </div>`;
 
   return html`<div class="container">
     <header>
-      ${previousResults.length > 0 &&
-      html`<h1 onClick="${() => onSwipe('left')}">${currentTab.label()}</h1>`}
-      <button class="clear" onClick="${() => setPreviousResults([])}">
-        ${i18next.t('ui.clear')}
-      </button>
+      <div class="tab-rail">
+        <button
+          class="tab-hit tab-hit-left"
+          onClick="${() => onSwipe('right')}"
+          aria-label="${i18next.t('ui.previous_tab')}"
+        >
+          <span class="tab-arrow">‹</span>
+          <span class="tab-peek">${previousTab.label()}</span>
+        </button>
+        ${previousResults.length > 0 &&
+        html`<h1 onClick="${() => onSwipe('left')}">
+          <span class="tab-title">${currentTab.label()}</span>
+        </h1>`}
+        ${previousResults.length === 0 &&
+        html`<h1>
+          <span class="tab-title">${currentTab.label()}</span>
+        </h1>`}
+        <button
+          class="tab-hit tab-hit-right"
+          onClick="${() => onSwipe('left')}"
+          aria-label="${i18next.t('ui.next_tab')}"
+        >
+          <span class="tab-peek">${nextTab.label()}</span>
+          <span class="tab-arrow">›</span>
+        </button>
+      </div>
     </header>
-    <div class="content">${results}</div>
+    <div class="content" ref="${contentRef}">${results}</div>
     <div class="footer">
       ${currentTab.buttons.map(
         (btn) =>
