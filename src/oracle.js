@@ -19,29 +19,35 @@ export function oracle(type) {
 
     question5050: [
       { label: i18next.t('Undecided'), weight: 5 },
-      { label: i18next.t('Strong yes'), weight: 5 },
+
+      { label: i18next.t('Strong yes'), weight: 10 },
       { label: i18next.t('Yes'), weight: 35 },
       { label: i18next.t('Weak yes {{weakYes}}'), weight: 10 },
-      { label: i18next.t('No'), weight: 40 },
+
+      { label: i18next.t('No'), weight: 35 },
       { label: i18next.t('Strong no'), weight: 5 },
     ],
 
     questionLikely: [
       { label: i18next.t('Undecided'), weight: 5 },
-      { label: i18next.t('Strong yes'), weight: 5 },
-      { label: i18next.t('Yes'), weight: 50 },
+
+      { label: i18next.t('Strong yes'), weight: 10 },
+      { label: i18next.t('Yes'), weight: 45 },
       { label: i18next.t('Weak yes {{weakYes}}'), weight: 15 },
+
       { label: i18next.t('No'), weight: 20 },
       { label: i18next.t('Strong no'), weight: 5 },
     ],
 
     questionUnlikely: [
       { label: i18next.t('Undecided'), weight: 5 },
+
       { label: i18next.t('Strong yes'), weight: 5 },
       { label: i18next.t('Yes'), weight: 15 },
       { label: i18next.t('Weak yes {{weakYes}}'), weight: 10 },
-      { label: i18next.t('No'), weight: 60 },
-      { label: i18next.t('Strong no'), weight: 5 },
+
+      { label: i18next.t('No'), weight: 55 },
+      { label: i18next.t('Strong no'), weight: 10 },
     ],
 
     level: [
@@ -73,28 +79,28 @@ export function oracle(type) {
 
     eventSeed: [
       {
-        label: '{{eventCategory}}',
+        label: '{{eventCategory}}\n\n{{inspirationTriplet}}',
       },
     ],
     eventCategory: [
       {
-        label: `**${i18next.t('event.space.category')}**\n\n{{event_space}}`,
+        label: `**${i18next.t('event.environment.category')}**\n\n{{event_environment}}`,
         weight: 1,
       },
       {
-        label: `**${i18next.t('event.tech.category')}**\n\n{{event_tech}}`,
+        label: `**${i18next.t('event.setback.category')}**\n\n{{event_setback}}`,
         weight: 1,
       },
       {
-        label: `**${i18next.t('event.factions.category')}**\n\n{{event_factions}}`,
+        label: `**${i18next.t('event.revelation.category')}**\n\n{{event_revelation}}`,
         weight: 1,
       },
       {
-        label: `**${i18next.t('event.mystery.category')}**\n\n{{event_mystery}}`,
+        label: `**${i18next.t('event.npc.category')}**\n\n{{event_npc}}`,
         weight: 1,
       },
       {
-        label: `**${i18next.t('event.complications.category')}**\n\n{{event_complications}}`,
+        label: `**${i18next.t('event.faction.category')}**\n\n{{event_faction}}`,
         weight: 1,
       },
       {
@@ -102,50 +108,50 @@ export function oracle(type) {
         weight: 1,
       },
     ],
-    event_space: [
-      { label: i18next.t('event.space.1') },
-      { label: i18next.t('event.space.2') },
-      { label: i18next.t('event.space.3') },
-      { label: i18next.t('event.space.4') },
-      { label: i18next.t('event.space.5') },
-      { label: i18next.t('event.space.6') },
-      { label: i18next.t('event.space.7') },
+    event_environment: [
+      { label: i18next.t('event.environment.1') },
+      { label: i18next.t('event.environment.2') },
+      { label: i18next.t('event.environment.3') },
+      { label: i18next.t('event.environment.4') },
+      { label: i18next.t('event.environment.5') },
+      { label: i18next.t('event.environment.6') },
+      { label: i18next.t('event.environment.7') },
     ],
-    event_tech: [
-      { label: i18next.t('event.tech.1') },
-      { label: i18next.t('event.tech.2') },
-      { label: i18next.t('event.tech.3') },
-      { label: i18next.t('event.tech.4') },
-      { label: i18next.t('event.tech.5') },
-      { label: i18next.t('event.tech.6') },
-      { label: i18next.t('event.tech.7') },
+    event_setback: [
+      { label: i18next.t('event.setback.1') },
+      { label: i18next.t('event.setback.2') },
+      { label: i18next.t('event.setback.3') },
+      { label: i18next.t('event.setback.4') },
+      { label: i18next.t('event.setback.5') },
+      { label: i18next.t('event.setback.6') },
+      { label: i18next.t('event.setback.7') },
     ],
-    event_factions: [
-      { label: i18next.t('event.factions.1') },
-      { label: i18next.t('event.factions.2') },
-      { label: i18next.t('event.factions.3') },
-      { label: i18next.t('event.factions.4') },
-      { label: i18next.t('event.factions.5') },
-      { label: i18next.t('event.factions.6') },
-      { label: i18next.t('event.factions.7') },
+    event_revelation: [
+      { label: i18next.t('event.revelation.1') },
+      { label: i18next.t('event.revelation.2') },
+      { label: i18next.t('event.revelation.3') },
+      { label: i18next.t('event.revelation.4') },
+      { label: i18next.t('event.revelation.5') },
+      { label: i18next.t('event.revelation.6') },
+      { label: i18next.t('event.revelation.7') },
     ],
-    event_mystery: [
-      { label: i18next.t('event.mystery.1') },
-      { label: i18next.t('event.mystery.2') },
-      { label: i18next.t('event.mystery.3') },
-      { label: i18next.t('event.mystery.4') },
-      { label: i18next.t('event.mystery.5') },
-      { label: i18next.t('event.mystery.6') },
-      { label: i18next.t('event.mystery.7') },
+    event_npc: [
+      { label: i18next.t('event.npc.1') },
+      { label: i18next.t('event.npc.2') },
+      { label: i18next.t('event.npc.3') },
+      { label: i18next.t('event.npc.4') },
+      { label: i18next.t('event.npc.5') },
+      { label: i18next.t('event.npc.6') },
+      { label: i18next.t('event.npc.7') },
     ],
-    event_complications: [
-      { label: i18next.t('event.complications.1') },
-      { label: i18next.t('event.complications.2') },
-      { label: i18next.t('event.complications.3') },
-      { label: i18next.t('event.complications.4') },
-      { label: i18next.t('event.complications.5') },
-      { label: i18next.t('event.complications.6') },
-      { label: i18next.t('event.complications.7') },
+    event_faction: [
+      { label: i18next.t('event.faction.1') },
+      { label: i18next.t('event.faction.2') },
+      { label: i18next.t('event.faction.3') },
+      { label: i18next.t('event.faction.4') },
+      { label: i18next.t('event.faction.5') },
+      { label: i18next.t('event.faction.6') },
+      { label: i18next.t('event.faction.7') },
     ],
     event_personal: [
       { label: i18next.t('event.personal.1') },
@@ -254,7 +260,7 @@ export function oracle(type) {
       },
       {
         label: i18next.t(
-          'Deus ex machina {{inspirationTriplet}}'
+          'Deus ex machina. {{inspirationTriplet}}'
         ),
         weight: 1,
       },
@@ -269,16 +275,6 @@ export function oracle(type) {
       {
         label: i18next.t(
           'A detail attract your attention. What is it? {{inspirationTriplet}}'
-        ),
-      },
-      {
-        label: i18next.t(
-          'A detail attracts your attention. What is it? {{inspirationTriplet}}'
-        ),
-      },
-      {
-        label: i18next.t(
-          'A detail calls your attention. What is it? {{inspirationTriplet}}'
         ),
       },
       {
