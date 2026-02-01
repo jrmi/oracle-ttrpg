@@ -2,7 +2,12 @@
   "name": "oracle-rpg",
   "private": true,
   "version": "0.0.0",
+  "devDependencies": {
+    "netlify-cli": "^23.14.0"
+  },
   "scripts": {
-    "dev": "npx http-server -c-1"
+    "dev": "npx http-server -c-1 public",
+    "deploy": "npx netlify deploy --prod --dir=public",
+    "deploy:preview": "npx netlify deploy --dir=public"
   }
 }
