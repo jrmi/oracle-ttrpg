@@ -12,42 +12,42 @@ const getWords = () => {
 export function oracle(type) {
   const data = {
     weakYes: [
-      { label: i18next.t('partially'), weight: 10 },
-      { label: i18next.t('temporary'), weight: 10 },
-      { label: i18next.t('...'), weight: 10 },
+      { label: i18next.t('oracle.weak_yes.partially'), weight: 10 },
+      { label: i18next.t('oracle.weak_yes.temporary'), weight: 10 },
+      { label: i18next.t('oracle.weak_yes.ellipsis'), weight: 10 },
     ],
 
     question5050: [
-      { label: i18next.t('Undecided'), weight: 5 },
+      { label: i18next.t('oracle.answer.undecided'), weight: 5 },
 
-      { label: i18next.t('Strong yes'), weight: 10 },
-      { label: i18next.t('Yes'), weight: 35 },
-      { label: i18next.t('Weak yes {{weakYes}}'), weight: 10 },
+      { label: i18next.t('oracle.answer.strong_yes'), weight: 10 },
+      { label: i18next.t('oracle.answer.yes'), weight: 35 },
+      { label: i18next.t('oracle.answer.weak_yes'), weight: 10 },
 
-      { label: i18next.t('No'), weight: 35 },
-      { label: i18next.t('Strong no'), weight: 5 },
+      { label: i18next.t('oracle.answer.no'), weight: 35 },
+      { label: i18next.t('oracle.answer.strong_no'), weight: 5 },
     ],
 
     questionLikely: [
-      { label: i18next.t('Undecided'), weight: 5 },
+      { label: i18next.t('oracle.answer.undecided'), weight: 5 },
 
-      { label: i18next.t('Strong yes'), weight: 10 },
-      { label: i18next.t('Yes'), weight: 45 },
-      { label: i18next.t('Weak yes {{weakYes}}'), weight: 15 },
+      { label: i18next.t('oracle.answer.strong_yes'), weight: 10 },
+      { label: i18next.t('oracle.answer.yes'), weight: 45 },
+      { label: i18next.t('oracle.answer.weak_yes'), weight: 15 },
 
-      { label: i18next.t('No'), weight: 20 },
-      { label: i18next.t('Strong no'), weight: 5 },
+      { label: i18next.t('oracle.answer.no'), weight: 20 },
+      { label: i18next.t('oracle.answer.strong_no'), weight: 5 },
     ],
 
     questionUnlikely: [
-      { label: i18next.t('Undecided'), weight: 5 },
+      { label: i18next.t('oracle.answer.undecided'), weight: 5 },
 
-      { label: i18next.t('Strong yes'), weight: 5 },
-      { label: i18next.t('Yes'), weight: 15 },
-      { label: i18next.t('Weak yes {{weakYes}}'), weight: 10 },
+      { label: i18next.t('oracle.answer.strong_yes'), weight: 5 },
+      { label: i18next.t('oracle.answer.yes'), weight: 15 },
+      { label: i18next.t('oracle.answer.weak_yes'), weight: 10 },
 
-      { label: i18next.t('No'), weight: 55 },
-      { label: i18next.t('Strong no'), weight: 10 },
+      { label: i18next.t('oracle.answer.no'), weight: 55 },
+      { label: i18next.t('oracle.answer.strong_no'), weight: 10 },
     ],
 
     level: [
@@ -60,20 +60,20 @@ export function oracle(type) {
 
 
     sceneQuestion: [
-      { label: i18next.t('Expected scene'), weight: 50 },
-      { label: i18next.t('Alteration seed'), weight: 30 },
-      { label: i18next.t('Random event seed'), weight: 20 },
+      { label: i18next.t('oracle.scene.expected'), weight: 50 },
+      { label: i18next.t('oracle.scene.alteration_seed'), weight: 30 },
+      { label: i18next.t('oracle.scene.random_event_seed'), weight: 20 },
     ],
 
     inspirationSeed: [
       {
-        label: i18next.t('Inspiration seed'),
+        label: i18next.t('oracle.seed.inspiration'),
       },
     ],
 
     actionInspiration: [
       {
-        label: i18next.t('Action inspiration seed'),
+        label: i18next.t('oracle.seed.action_inspiration'),
       },
     ],
 
@@ -171,26 +171,19 @@ export function oracle(type) {
 
     fullNPC: [
       {
-        label:i18next.t(
-          'NPC seed'
-        ),
+        label: i18next.t('oracle.seed.npc'),
       },
     ],
 
     fullLocation: [
       {
-        label:i18next.t(
-          'Location seed'
-        ),
-          
+        label: i18next.t('oracle.seed.location'),
       },
     ],
 
     fullPlot: [
       {
-        label: i18next.t(
-          'Plot seed'
-        ),
+        label: i18next.t('oracle.seed.plot'),
       },
     ],
 
@@ -201,110 +194,88 @@ export function oracle(type) {
     ],
 
     actionType: [
-      { label: i18next.t('Use heart'), weight: 1 },
-      { label: i18next.t('Use head'), weight: 1 },
-      { label: i18next.t('Use mouth'), weight: 1 },
-      { label: i18next.t('Use guts'), weight: 1 },
-      { label: i18next.t('Use muscles'), weight: 1 },
+      { label: i18next.t('oracle.action.use_heart'), weight: 1 },
+      { label: i18next.t('oracle.action.use_head'), weight: 1 },
+      { label: i18next.t('oracle.action.use_mouth'), weight: 1 },
+      { label: i18next.t('oracle.action.use_guts'), weight: 1 },
+      { label: i18next.t('oracle.action.use_muscles'), weight: 1 },
     ],
     sceneAlteration: [
-      { label: i18next.t('Increase tension'), weight: 1 },
-      { label: i18next.t('Decrease tension'), weight: 1 },
-      { label: i18next.t('Location less favorable'), weight: 1 },
-      { label: i18next.t('Location more favorable'), weight: 1 },
+      { label: i18next.t('oracle.alteration.increase_tension'), weight: 1 },
+      { label: i18next.t('oracle.alteration.decrease_tension'), weight: 1 },
+      { label: i18next.t('oracle.alteration.location_less'), weight: 1 },
+      { label: i18next.t('oracle.alteration.location_more'), weight: 1 },
       {
-        label: i18next.t(
-          'Introduce goods news {{inspirationTriplet}}'
-        ),
+        label: i18next.t('oracle.alteration.good_news'),
         weight: 1,
       },
       {
-        label: i18next.t(
-          'Introduce bad news {{inspirationTriplet}}'
-        ),
+        label: i18next.t('oracle.alteration.bad_news'),
         weight: 1,
       },
       {
-        label: i18next.t(
-          'Bring someone good {{inspirationTriplet}}'
-        ),
+        label: i18next.t('oracle.alteration.bring_good'),
         weight: 1,
       },
       {
-        label: i18next.t(
-          'Bring someone bad {{inspirationTriplet}}'
-        ),
+        label: i18next.t('oracle.alteration.bring_bad'),
         weight: 1,
       },
     ],
     randomEvent: [
       {
-        label: i18next.t('Foreshadow trouble ({{action}}, {{focus}})'),
+        label: i18next.t('oracle.random.foreshadow_trouble'),
         weight: 1,
       },
       {
-        label: i18next.t('Add new NPC'),
+        label: i18next.t('oracle.random.add_npc'),
         weight: 1,
       },
       {
-        label: i18next.t('An NPC takes action ({{action}}, {{focus}})'),
+        label: i18next.t('oracle.random.npc_action'),
         weight: 1,
       },
       {
-        label: i18next.t('Advance a threat'),
+        label: i18next.t('oracle.random.advance_threat'),
         weight: 1,
       },
       {
-        label: i18next.t('Advance a plot'),
+        label: i18next.t('oracle.random.advance_plot'),
         weight: 1,
       },
       {
-        label: i18next.t(
-          'Deus ex machina. {{inspirationTriplet}}'
-        ),
+        label: i18next.t('oracle.random.deus_ex_machina'),
         weight: 1,
       },
     ],
 
     newSceneQuestion: [
       {
-        label: i18next.t(
-          'Describe what you see. {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.describe.see'),
       },
       {
-        label: i18next.t(
-          'A detail attract your attention. What is it? {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.detail.attention'),
       },
       {
-        label: i18next.t(
-          'Narrate a memory. {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.memory'),
       },
       {
-        label: i18next.t(
-          'Something is dangerous here, what is it? {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.danger'),
       },
       {
-        label: i18next.t('Foreshadow what is about to happen.'),
+        label: i18next.t('prompt.foreshadow'),
       },
       {
-        label: i18next.t('Your are missing something or someone. Who is it?'),
+        label: i18next.t('prompt.missing'),
       },
       {
-        label: i18next.t(
-          'Describe what you hear. {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.describe.hear'),
       },
       {
-        label: i18next.t(
-          'Describe what you smell. {{inspirationTriplet}}'
-        ),
+        label: i18next.t('prompt.describe.smell'),
       },
       {
-        label: i18next.t('Describe how you feel.'),
+        label: i18next.t('prompt.describe.feel'),
       },
     ],
   };

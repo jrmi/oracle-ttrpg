@@ -16,38 +16,38 @@ const html = htm.bind(h);
 const tabs = [
   {
     key: 'oracle',
-    label: () => i18next.t('Oracle'),
+    label: () => i18next.t('ui.oracle'),
     buttons: [
-      { type: 'questionUnlikely', label: () => i18next.t('Unlikely') },
-      { type: 'question5050', label: () => i18next.t('50/50') },
-      { type: 'questionLikely', label: () => i18next.t('Likely') },
+      { type: 'questionUnlikely', label: () => i18next.t('ui.odds.unlikely') },
+      { type: 'question5050', label: () => i18next.t('ui.odds.even') },
+      { type: 'questionLikely', label: () => i18next.t('ui.odds.likely') },
     ],
   },
   {
     key: 'oracle2',
-    label: () => i18next.t('Oracle') + ' 2',
+    label: () => i18next.t('ui.oracle') + ' 2',
     buttons: [
-      { type: 'level', label: () => i18next.t('Expectation') },
-      { type: 'clock', label: () => i18next.t('Clock') },
-      { type: 'inspirationSeed', label: () => i18next.t('Inspiration') },
+      { type: 'level', label: () => i18next.t('ui.oracle2.expectation') },
+      { type: 'clock', label: () => i18next.t('ui.oracle2.clock') },
+      { type: 'inspirationSeed', label: () => i18next.t('ui.inspiration') },
     ],
   },
   {
     key: 'scene',
-    label: () => i18next.t('Inspiration'),
+    label: () => i18next.t('ui.inspiration'),
     buttons: [
-      { type: 'actionInspiration', label: () => i18next.t('Action') },
-      { type: 'newScene', label: () => i18next.t('New scene') },
-      { type: 'eventSeed', label: () => i18next.t('Event') },
+      { type: 'actionInspiration', label: () => i18next.t('ui.action') },
+      { type: 'newScene', label: () => i18next.t('ui.scene.new') },
+      { type: 'eventSeed', label: () => i18next.t('ui.event') },
     ],
   },
   {
     key: 'generate',
-    label: () => i18next.t('Generate'),
+    label: () => i18next.t('ui.generate'),
     buttons: [
-      { type: 'fullNPC', label: () => i18next.t('NPC') },
-      { type: 'fullLocation', label: () => i18next.t('Location') },
-      { type: 'fullPlot', label: () => i18next.t('Plot') },
+      { type: 'fullNPC', label: () => i18next.t('ui.npc') },
+      { type: 'fullLocation', label: () => i18next.t('ui.location') },
+      { type: 'fullPlot', label: () => i18next.t('ui.plot') },
     ],
   },
 ];
@@ -108,7 +108,7 @@ const App = () => {
           })}
         </div>`
       : html`<div class="empty-state">
-          <span onClick="${() => onSwipe('left')}">${i18next.t('Oracle for TTRPG')}</span>
+          <span onClick="${() => onSwipe('left')}">${i18next.t('ui.tagline')}</span>
         </div>`;
 
   return html`<div class="container">
@@ -116,7 +116,7 @@ const App = () => {
       ${previousResults.length > 0 &&
       html`<h1 onClick="${() => onSwipe('left')}">${currentTab.label()}</h1>`}
       <button class="clear" onClick="${() => setPreviousResults([])}">
-        ${i18next.t('Clear')}
+        ${i18next.t('ui.clear')}
       </button>
     </header>
     <div class="content">${results}</div>

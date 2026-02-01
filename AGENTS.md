@@ -12,7 +12,7 @@
 ## Build, Test, and Development Commands
 This repo is a static site with no build step.
 - Serve locally with a static server so module imports work:
-  - `python -m http.server` (then open `http://localhost:8000`).
+  - `npm run dev` (then open `http://localhost:8080`).
 - For quick previews, you can also open `index.html` directly, but module imports may be blocked by the browser.
 
 ## Coding Style & Naming Conventions
