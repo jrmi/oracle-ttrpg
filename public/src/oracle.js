@@ -58,7 +58,6 @@ export function oracle(type) {
       { label: '➖➖', weight: 5 },
     ],
 
-
     sceneQuestion: [
       { label: i18next.t('oracle.scene.expected'), weight: 50 },
       { label: i18next.t('oracle.scene.alteration_seed'), weight: 30 },
@@ -187,9 +186,10 @@ export function oracle(type) {
       },
     ],
 
-    inspirationTriplet: [{
-          label: '({{inspiration}}, {{inspiration}}, {{inspiration}})',
-          weight: 1,
+    inspirationTriplet: [
+      {
+        label: '({{cactors}}, {{csituations}}, {{celements}})',
+        weight: 1,
       },
     ],
 
@@ -283,10 +283,10 @@ export function oracle(type) {
   Object.assign(
     data,
     Object.fromEntries(
-    Object.entries(getWords()).map(([theme, values]) => [
-      theme,
-      values.map((word) => ({
-        label: word,
+      Object.entries(getWords()).map(([theme, values]) => [
+        theme,
+        values.map((word) => ({
+          label: word,
           weight: 1,
         })),
       ])
