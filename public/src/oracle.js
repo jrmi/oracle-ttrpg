@@ -1,13 +1,23 @@
-import enWords from '../locales/en/words.js';
-import frWords from '../locales/fr/words.js';
-
 import story from './story.js';
 
-const getWords = () => {
-  const resolved = i18next?.resolvedLanguage || i18next?.language || 'en';
-  const base = resolved.split('-')[0];
-  return base === 'fr' ? frWords : enWords;
-};
+const WORD_BANK_KEYS = [
+  'action',
+  'focus',
+  'disposition',
+  'inspiration',
+  'actor',
+  'npc_distinctive_feature',
+  'location',
+  'location_qualifier',
+  'name_syllables',
+  'adj',
+  'obj',
+  'card',
+  'cactors',
+  'csituations',
+  'celements',
+  'clock',
+];
 
 export function oracle(type) {
   const tripleOCheck = i18next.t('triple_o.check', { returnObjects: true });
@@ -313,13 +323,17 @@ export function oracle(type) {
   Object.assign(
     data,
     Object.fromEntries(
-      Object.entries(getWords()).map(([theme, values]) => [
-        theme,
-        values.map((word) => ({
-          label: word,
-          weight: 1,
-        })),
-      ])
+      WORD_BANK_KEYS.map((key) => {
+        const values = i18next.t(key, { returnObjects: true });
+
+        return [
+          key,
+          (Array.isArray(values) ? values : []).map((word) => ({
+            label: word,
+            weight: 1,
+          })),
+        ];
+      })
     )
   );
 
