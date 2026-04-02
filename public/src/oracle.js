@@ -19,6 +19,16 @@ const WORD_BANK_KEYS = [
   'clock',
 ];
 
+const TRIPLE_O_SPECIFIC_KEYS = [
+  'combat',
+  'social',
+  'exploration',
+  'delving',
+  'interpretation',
+  'downtime',
+  'planning',
+];
+
 export function oracle(type) {
   const tripleOCheck = i18next.t('triple_o.check', { returnObjects: true });
   const tripleOAction = i18next.t('triple_o.spark.action', {
@@ -30,6 +40,14 @@ export function oracle(type) {
   const tripleOFocus = i18next.t('triple_o.spark.focus', {
     returnObjects: true,
   });
+  const tripleOSpecific = Object.fromEntries(
+    TRIPLE_O_SPECIFIC_KEYS.map((key) => [
+      key,
+      i18next.t(`triple_o.specific.${key}`, {
+        returnObjects: true,
+      }),
+    ])
+  );
   const data = {
     weakYes: [
       { label: i18next.t('oracle.weak_yes.partially'), weight: 10 },
@@ -218,6 +236,48 @@ export function oracle(type) {
       },
     ],
 
+    tripleOCombat: [
+      {
+        label: i18next.t('oracle.triple_o.combat'),
+      },
+    ],
+
+    tripleOSocial: [
+      {
+        label: i18next.t('oracle.triple_o.social'),
+      },
+    ],
+
+    tripleOExploration: [
+      {
+        label: i18next.t('oracle.triple_o.exploration'),
+      },
+    ],
+
+    tripleODelving: [
+      {
+        label: i18next.t('oracle.triple_o.delving'),
+      },
+    ],
+
+    tripleOInterpretation: [
+      {
+        label: i18next.t('oracle.triple_o.interpretation'),
+      },
+    ],
+
+    tripleODowntime: [
+      {
+        label: i18next.t('oracle.triple_o.downtime'),
+      },
+    ],
+
+    tripleOPlanning: [
+      {
+        label: i18next.t('oracle.triple_o.planning'),
+      },
+    ],
+
     inspirationTriplet: [
       {
         label: '({{cactors}}, {{csituations}}, {{celements}})',
@@ -315,6 +375,38 @@ export function oracle(type) {
       { label: tripleOCheck[1], weight: 2 },
       { label: tripleOCheck[2], weight: 3 },
     ],
+    tripleOCombatResult: (tripleOSpecific.combat || []).map((label) => ({
+      label,
+      weight: 1,
+    })),
+    tripleOSocialResult: (tripleOSpecific.social || []).map((label) => ({
+      label,
+      weight: 1,
+    })),
+    tripleOExplorationResult: (tripleOSpecific.exploration || []).map(
+      (label) => ({
+        label,
+        weight: 1,
+      })
+    ),
+    tripleODelvingResult: (tripleOSpecific.delving || []).map((label) => ({
+      label,
+      weight: 1,
+    })),
+    tripleOInterpretationResult: (tripleOSpecific.interpretation || []).map(
+      (label) => ({
+        label,
+        weight: 1,
+      })
+    ),
+    tripleODowntimeResult: (tripleOSpecific.downtime || []).map((label) => ({
+      label,
+      weight: 1,
+    })),
+    tripleOPlanningResult: (tripleOSpecific.planning || []).map((label) => ({
+      label,
+      weight: 1,
+    })),
     tripleOAction: tripleOAction.map((label) => ({ label, weight: 1 })),
     tripleOMethod: tripleOMethod.map((label) => ({ label, weight: 1 })),
     tripleOFocus: tripleOFocus.map((label) => ({ label, weight: 1 })),

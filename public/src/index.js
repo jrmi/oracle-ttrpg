@@ -56,6 +56,40 @@ const tabs = [
     buttons: [
       { type: 'tripleOCheck', label: () => i18next.t('ui.triple_o.check') },
       { type: 'tripleOSpark', label: () => i18next.t('ui.triple_o.spark') },
+      { type: 'tripleOCombat', label: () => i18next.t('ui.triple_o.combat') },
+    ],
+  },
+  {
+    key: 'triple-o-2',
+    label: () => i18next.t('ui.triple_o') + ' 2',
+    buttons: [
+      { type: 'tripleOSocial', label: () => i18next.t('ui.triple_o.social') },
+      {
+        type: 'tripleOExploration',
+        label: () => i18next.t('ui.triple_o.exploration'),
+      },
+      {
+        type: 'tripleODelving',
+        label: () => i18next.t('ui.triple_o.delving'),
+      },
+    ],
+  },
+  {
+    key: 'triple-o-3',
+    label: () => i18next.t('ui.triple_o') + ' 3',
+    buttons: [
+      {
+        type: 'tripleOInterpretation',
+        label: () => i18next.t('ui.triple_o.interpretation'),
+      },
+      {
+        type: 'tripleODowntime',
+        label: () => i18next.t('ui.triple_o.downtime'),
+      },
+      {
+        type: 'tripleOPlanning',
+        label: () => i18next.t('ui.triple_o.planning'),
+      },
     ],
   },
 ];

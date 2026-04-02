@@ -69,7 +69,7 @@ myOracleType: [
 ## Default decision rules
 
 - Prefer adding to an existing tab over creating a new one.
-- Limit the number of oracle per tab at 4 max.
+- Limit the number of oracle per tab at 3 max.
 - Prefer reusing existing word pools over inventing new ones.
 - Add English keys before French keys.
 - Do not touch `archive/`.
