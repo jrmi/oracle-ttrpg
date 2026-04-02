@@ -1,22 +1,29 @@
 # Repository Guidelines
 
+This repository is a static browser-side Preact app for TTRPG oracle prompts and GM-less play tools. There is no build step: `public/index.html` loads CDN dependencies and `public/src/index.js` mounts the app directly in the browser.
+
 ## Project Structure & Module Organization
 - `public/index.html` bootstraps the app and loads CDN dependencies (Preact, HTM, i18next).
-- `public/src/index.js` is the main UI entry point and renders the Preact app.
-- `public/src/oracle.js`, `public/src/story.js`, and `public/src/utils.js` contain core logic, generators, and shared hooks/utilities.
+- `public/src/index.js` defines the tabs/buttons and renders the UI.
+- `public/src/oracle.js` holds generator tables and output templates.
+- `public/src/story.js` resolves recursive `{{tokens}}` used by generator templates.
+- `public/src/i18n.js` loads translations.
 - `public/styles.css` holds all UI styling.
-- `public/locales/` contains translations (e.g., `public/locales/en/translation.json`, `public/locales/fr/translation.json`).
-- `public/icons/` and `public/manifest.json` support PWA assets.
+- `public/locales/` contains translations.
 - `archive/` is historical material; avoid new changes unless explicitly needed.
 
+## Core Rules
+- Keep the app browser-only. Do not add tooling assumptions, Node-only APIs, or build-time imports.
+- Generated results are markdown strings, so keep template output markdown-safe.
+- `oracle(type)` builds a `data` object where each key maps to an array of weighted `{ label, weight }` entries. Omit `weight` only when equal weighting is intended.
+- Template labels can reference other tables with `{{key}}`; `story.js` resolves them recursively.
+- Keep thematic text in translation files, not hardcoded JavaScript, when possible.
+- When adding a new oracle action, update `public/src/index.js`, `public/src/oracle.js`, and the locale files together.
+
 ## Build, Test, and Development Commands
-This repo is a static site with no build step.
-- Serve locally with a static server so module imports work:
-  - `npm run dev` (then open `http://localhost:8080`).
-- For quick previews, you can also open `index.html` directly, but module imports may be blocked by the browser.
-- Deploy with Netlify CLI:
-  - `npm run deploy` (production deploy from `public/`).
-  - `npm run deploy:preview` (draft deploy from `public/`).
+- `npm run dev` serves `public/` locally at `http://localhost:8080`.
+- `npm run deploy` deploys `public/` to Netlify production.
+- `npm run deploy:preview` creates a Netlify preview deploy.
 
 ## Coding Style & Naming Conventions
 - JavaScript uses 2-space indentation, single quotes, and semicolons.
@@ -25,7 +32,8 @@ This repo is a static site with no build step.
 
 ## Testing Guidelines
 - No automated tests are present. Validate changes manually in the browser.
-- When editing generators, verify multiple button flows (Oracle, Inspiration, Generate) to ensure output formatting stays intact.
+- When editing generators, verify the main button flows still work and output renders correctly.
+- Test both English and French when changing translation keys.
 
 ## Commit & Pull Request Guidelines
 - Commit history uses short, sentence-style messages (e.g., “Update january 2026”). Keep messages concise and descriptive.
@@ -33,4 +41,4 @@ This repo is a static site with no build step.
 
 ## Localization Notes
 - Add new keys to `locales/en/translation.json` first, then update other locales.
-- For non-JSON locale data (e.g., `locales/fr/words.js`), keep exports consistent with existing structures.
+- Keep equivalent meaning across locales, not just literal wording.
