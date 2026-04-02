@@ -10,6 +10,16 @@ const getWords = () => {
 };
 
 export function oracle(type) {
+  const tripleOCheck = i18next.t('triple_o.check', { returnObjects: true });
+  const tripleOAction = i18next.t('triple_o.spark.action', {
+    returnObjects: true,
+  });
+  const tripleOMethod = i18next.t('triple_o.spark.method', {
+    returnObjects: true,
+  });
+  const tripleOFocus = i18next.t('triple_o.spark.focus', {
+    returnObjects: true,
+  });
   const data = {
     weakYes: [
       { label: i18next.t('oracle.weak_yes.partially'), weight: 10 },
@@ -186,6 +196,18 @@ export function oracle(type) {
       },
     ],
 
+    tripleOCheck: [
+      {
+        label: i18next.t('oracle.triple_o.check'),
+      },
+    ],
+
+    tripleOSpark: [
+      {
+        label: i18next.t('oracle.triple_o.spark'),
+      },
+    ],
+
     inspirationTriplet: [
       {
         label: '({{cactors}}, {{csituations}}, {{celements}})',
@@ -278,6 +300,14 @@ export function oracle(type) {
         label: i18next.t('prompt.describe.feel'),
       },
     ],
+    tripleOCheckResult: [
+      { label: tripleOCheck[0], weight: 1 },
+      { label: tripleOCheck[1], weight: 2 },
+      { label: tripleOCheck[2], weight: 3 },
+    ],
+    tripleOAction: tripleOAction.map((label) => ({ label, weight: 1 })),
+    tripleOMethod: tripleOMethod.map((label) => ({ label, weight: 1 })),
+    tripleOFocus: tripleOFocus.map((label) => ({ label, weight: 1 })),
   };
 
   Object.assign(

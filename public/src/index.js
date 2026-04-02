@@ -50,6 +50,14 @@ const tabs = [
       { type: 'fullPlot', label: () => i18next.t('ui.plot') },
     ],
   },
+  {
+    key: 'triple-o',
+    label: () => i18next.t('ui.triple_o'),
+    buttons: [
+      { type: 'tripleOCheck', label: () => i18next.t('ui.triple_o.check') },
+      { type: 'tripleOSpark', label: () => i18next.t('ui.triple_o.spark') },
+    ],
+  },
 ];
 
 const max = tabs.length;
