@@ -11,7 +11,7 @@
   "ui.event": "Événement",
   "ui.generate": "Graines",
   "ui.triple_o": "Triple o",
-  "ui.triple_o.check": "Vérification",
+  "ui.triple_o.check": "Test",
   "ui.triple_o.spark": "Étincelle",
   "ui.triple_o.combat": "Combat",
   "ui.triple_o.social": "Social",
@@ -41,11 +41,11 @@
   "oracle.triple_o.combat": "**Combat**\n\n{{tripleOCombatResult}}",
   "oracle.triple_o.social": "**Social**\n\n{{tripleOSocialResult}}",
   "oracle.triple_o.exploration": "**Exploration**\n\n{{tripleOExplorationResult}}",
-  "oracle.triple_o.delving": "**Exploration profonde**\n\n{{tripleODelvingResult}}",
+  "oracle.triple_o.delving": "**Investigation**\n\n{{tripleODelvingResult}}",
   "oracle.triple_o.interpretation": "**Interprétation**\n\n{{tripleOInterpretationResult}}",
-  "oracle.triple_o.downtime": "**Temps calme**\n\n{{tripleODowntimeResult}}",
+  "oracle.triple_o.downtime": "**Repos**\n\n{{tripleODowntimeResult}}",
   "oracle.triple_o.planning": "**Planification**\n\n{{tripleOPlanningResult}}",
-  "triple_o.check": ["L'Étrange", "L'Option", "L'Évident"],
+  "triple_o.check": ["L'Étonnant", "L'Éventuel", "L'Évident"],
   "triple_o.spark.action": [
     "Abandonner",
     "Avancer",
@@ -1054,8 +1054,5 @@
     "Le Fragment",
     "Le Symbole"
   ],
-  "clock": [
-    "+1",
-    "0"
-  ]
+  "clock": ["+1", "0"]
 }

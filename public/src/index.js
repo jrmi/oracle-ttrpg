@@ -9,24 +9,17 @@ import { micromark } from 'https://esm.sh/micromark@3?bundle';
 
 import { oracle } from './oracle.js';
 import { initI18n } from './i18n.js';
-import { useSwipe } from './utils.js';
 
 const html = htm.bind(h);
 
-const tabs = [
+const groups = [
   {
     key: 'oracle',
     label: () => i18next.t('ui.oracle'),
-    buttons: [
+    oracles: [
       { type: 'questionUnlikely', label: () => i18next.t('ui.odds.unlikely') },
       { type: 'question5050', label: () => i18next.t('ui.odds.even') },
       { type: 'questionLikely', label: () => i18next.t('ui.odds.likely') },
-    ],
-  },
-  {
-    key: 'oracle2',
-    label: () => i18next.t('ui.oracle') + ' 2',
-    buttons: [
       { type: 'level', label: () => i18next.t('ui.oracle2.expectation') },
       { type: 'clock', label: () => i18next.t('ui.oracle2.clock') },
       { type: 'inspirationSeed', label: () => i18next.t('ui.inspiration') },
@@ -35,7 +28,7 @@ const tabs = [
   {
     key: 'scene',
     label: () => i18next.t('ui.inspiration'),
-    buttons: [
+    oracles: [
       { type: 'actionInspiration', label: () => i18next.t('ui.action') },
       { type: 'newScene', label: () => i18next.t('ui.scene.new') },
       { type: 'eventSeed', label: () => i18next.t('ui.event') },
@@ -44,7 +37,7 @@ const tabs = [
   {
     key: 'generate',
     label: () => i18next.t('ui.generate'),
-    buttons: [
+    oracles: [
       { type: 'fullNPC', label: () => i18next.t('ui.npc') },
       { type: 'fullLocation', label: () => i18next.t('ui.location') },
       { type: 'fullPlot', label: () => i18next.t('ui.plot') },
@@ -53,7 +46,7 @@ const tabs = [
   {
     key: 'triple-o',
     label: () => i18next.t('ui.triple_o'),
-    buttons: [
+    oracles: [
       { type: 'tripleOCheck', label: () => i18next.t('ui.triple_o.check') },
       { type: 'tripleOSpark', label: () => i18next.t('ui.triple_o.spark') },
       { type: 'tripleOCombat', label: () => i18next.t('ui.triple_o.combat') },
@@ -61,8 +54,8 @@ const tabs = [
   },
   {
     key: 'triple-o-2',
-    label: () => i18next.t('ui.triple_o') + ' 2',
-    buttons: [
+    label: () => i18next.t('ui.triple_o'),
+    oracles: [
       { type: 'tripleOSocial', label: () => i18next.t('ui.triple_o.social') },
       {
         type: 'tripleOExploration',
@@ -76,8 +69,8 @@ const tabs = [
   },
   {
     key: 'triple-o-3',
-    label: () => i18next.t('ui.triple_o') + ' 3',
-    buttons: [
+    label: () => i18next.t('ui.triple_o'),
+    oracles: [
       {
         type: 'tripleOInterpretation',
         label: () => i18next.t('ui.triple_o.interpretation'),
@@ -94,34 +87,41 @@ const tabs = [
   },
 ];
 
-const max = tabs.length;
+const getDisplayGroups = () =>
+  groups.reduce((acc, group) => {
+    const label = group.label();
+    const previousGroup = acc[acc.length - 1];
+
+    if (previousGroup && previousGroup.label === label) {
+      previousGroup.oracles = [...previousGroup.oracles, ...group.oracles];
+      return acc;
+    }
+
+    acc.push({
+      key: group.key,
+      label,
+      oracles: [...group.oracles],
+    });
+
+    return acc;
+  }, []);
 
 const App = () => {
-  const contentRef = useRef(null);
   const resultsRef = useRef(null);
   const [previousResults, setPreviousResults] = useState(() => []);
-  const [mode, setMode] = useState(0);
+  const [currentOracle, setCurrentOracle] = useState(() => ({
+    category: groups[0].label(),
+    label: groups[0].oracles[0].label(),
+  }));
+  const displayGroups = getDisplayGroups();
 
-  const onSwipe = (direction) => {
-    switch (direction) {
-      case 'right':
-        setMode((prev) => (prev < 1 ? max - 1 : prev - 1));
-        break;
-      default:
-        setMode((prev) => (prev + 1) % max);
-    }
-  };
-
-  const currentTab = tabs[mode];
-
-  useSwipe(contentRef, onSwipe);
-
-  const test = (type, label) => {
+  const runOracle = (type, label, category) => {
+    setCurrentOracle({ category, label });
     setPreviousResults((prev) => {
       const result = oracle(type);
       const newPreviousResult = [
         ...prev.slice(-20),
-        { result, label, category: currentTab.label() },
+        { result, label, category },
       ];
       return newPreviousResult;
     });
@@ -131,10 +131,7 @@ const App = () => {
     if (resultsRef.current) {
       resultsRef.current.scrollTop = resultsRef.current.scrollHeight;
     }
-  }, [previousResults, mode]);
-
-  const previousTab = tabs[(mode - 1 + max) % max];
-  const nextTab = tabs[(mode + 1) % max];
+  }, [previousResults]);
 
   const results =
     previousResults.length > 0
@@ -154,51 +151,44 @@ const App = () => {
           })}
         </div>`
       : html`<div class="empty-state">
-          <span
-            class="empty-state-title"
-            onClick="${() => onSwipe('left')}"
-          >
-            ${i18next.t('ui.tagline')}
-          </span>
-          <div class="empty-state-hint">${i18next.t('ui.swipe_hint')}</div>
+          <span class="empty-state-title">${i18next.t('ui.tagline')}</span>
+          <div class="empty-state-hint">
+            ${currentOracle.category} · ${currentOracle.label}
+          </div>
         </div>`;
 
   return html`<div class="container">
     <header>
-      <div class="tab-rail">
-        <button
-          class="tab-hit tab-hit-left"
-          onClick="${() => onSwipe('right')}"
-          aria-label="${i18next.t('ui.previous_tab')}"
-        >
-          <span class="tab-arrow">‹</span>
-          <span class="tab-peek">${previousTab.label()}</span>
-        </button>
-        ${previousResults.length > 0 &&
-        html`<h1 onClick="${() => onSwipe('left')}">
-          <span class="tab-title">${currentTab.label()}</span>
-        </h1>`}
-        ${previousResults.length === 0 &&
-        html`<h1>
-          <span class="tab-title">${currentTab.label()}</span>
-        </h1>`}
-        <button
-          class="tab-hit tab-hit-right"
-          onClick="${() => onSwipe('left')}"
-          aria-label="${i18next.t('ui.next_tab')}"
-        >
-          <span class="tab-peek">${nextTab.label()}</span>
-          <span class="tab-arrow">›</span>
-        </button>
+      <div class="header-summary">
+        <div class="header-kicker">${currentOracle.category}</div>
+        <h1>
+          <span class="tab-title">${currentOracle.label}</span>
+        </h1>
       </div>
     </header>
-    <div class="content" ref="${contentRef}">${results}</div>
-    <div class="footer">
-      ${currentTab.buttons.map(
-        (btn) =>
-          html`<button onclick="${() => test(btn.type, btn.label())}">
-            ${btn.label()}
-          </button>`
+    <div class="content">${results}</div>
+    <div class="oracle-picker">
+      ${displayGroups.map(
+        (group) =>
+          html`<section class="oracle-group" key="${group.key}">
+            <div class="oracle-group-label">${group.label}</div>
+            <div class="oracle-list">
+              ${group.oracles.map((item) => {
+                const label = item.label();
+                const isActive =
+                  currentOracle.category === group.label &&
+                  currentOracle.label === label;
+
+                return html`<button
+                  class="${`oracle-button${isActive ? ' is-active' : ''}`}"
+                  onclick="${() => runOracle(item.type, label, group.label)}"
+                  title="${label}"
+                >
+                  ${label}
+                </button>`;
+              })}
+            </div>
+          </section>`
       )}
     </div>
   </div>`;
